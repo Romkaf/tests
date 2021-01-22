@@ -17,7 +17,7 @@ const Module = ({
 
 	return (
 		<div
-			className={`modal ${styles.blackout}`}
+			className={`modal ${styles.root}`}
 			tabIndex="-1"
 			ref={modal}
 			onClick={handleModalConfirm}

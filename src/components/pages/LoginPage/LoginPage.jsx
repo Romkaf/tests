@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import styles from './Login.module.scss';
+import styles from './LoginPage.module.scss';
 
-const Login = () => {
+const LoginPage = () => {
 	const [isRegist, setIsRegist] = useState(true);
 
 	const handleBtnClick = (evt) => {
@@ -75,4 +75,4 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default LoginPage;
