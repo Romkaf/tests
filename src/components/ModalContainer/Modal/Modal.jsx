@@ -1,26 +1,28 @@
 import React from 'react';
 import styles from './Modal.module.scss';
 
-const Module = ({
-	modal,
+const Modale = ({
 	modalText = 'Modal body text goes here.',
 	onModalConfirm,
+	hideModal,
 }) => {
 	const handleModalConfirm = () => {
 		onModalConfirm();
-		modal.current.style.display = 'none';
 	};
 
 	const handleModalCansel = () => {
-		modal.current.style.display = 'none';
+		hideModal();
+	};
+
+	const handleModalHide = (evt) => {
+		evt.target.classList.contains('modal') && hideModal();
 	};
 
 	return (
 		<div
 			className={`modal ${styles.root}`}
 			tabIndex="-1"
-			ref={modal}
-			onClick={handleModalConfirm}
+			onClick={handleModalHide}
 		>
 			<div className="modal-dialog">
 				<div className="modal-content">
@@ -45,7 +47,11 @@ const Module = ({
 						>
 							Cansel
 						</button>
-						<button type="button" className="btn btn-primary">
+						<button
+							type="button"
+							className="btn btn-primary"
+							onClick={handleModalConfirm}
+						>
 							Confirm
 						</button>
 					</div>
@@ -55,4 +61,4 @@ const Module = ({
 	);
 };
 
-export default Module;
+export default Modale;

@@ -3,8 +3,9 @@ import React from 'react';
 import styles from './NotFoundPage.module.scss';
 
 const NotFoundPage = () => (
-	<div className={styles.root}>
-		<p>Oops, Page was not found!</p>
+	<div className="alert alert-primary mt-3">
+		<h3>Page not found</h3>
+		<p>We are sorry but the page you are looking for does not exist.</p>
 	</div>
 );
 
