@@ -1,26 +1,30 @@
 import React from 'react';
-import styles from './Row.module.scss';
 import { useHistory } from 'react-router-dom';
+import { MODAL_QUEST_RUN_TEST } from '@constants';
 
-const Row = ({ item }) => {
-	const { title, date } = item;
+const Row = ({ item, onModalShow }) => {
+	const { title, date, id } = item;
 	const history = useHistory();
 
 	const handleRowClick = (evt) => {
 		evt.target.tagName !== 'BUTTON' &&
 			evt.target.tagName !== 'I' &&
-			console.log(evt.target.tagName);
-		// showModal('Do you want to start the test?', handleTestStart);
+			onModalShow(MODAL_QUEST_RUN_TEST, handleTestStart);
 	};
 
-	// const handleTestStart = (id) => history.push(`/test${id}`);
+	const handleBtnClick = () => history.push(`/edit${id}`);
+
+	const handleTestStart = () => history.push(`/test${id}`);
 
 	return (
 		<tr className="btn-light" tabIndex="0" onClick={handleRowClick}>
 			<td>{title}</td>
 			<td>{date}</td>
 			<td>
-				<button className="btn btn-sm btn-outline-secondary float-right">
+				<button
+					className="btn btn-sm btn-outline-secondary float-right"
+					onClick={handleBtnClick}
+				>
 					<i className="bi bi-pencil-square" />
 				</button>
 			</td>

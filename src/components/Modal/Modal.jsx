@@ -1,28 +1,35 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { keyCodeEsc } from '@constants';
 import styles from './Modal.module.scss';
 
-const Modale = ({
-	modalText = 'Modal body text goes here.',
-	onModalConfirm,
-	hideModal,
-}) => {
+const Modale = ({ text, onModalConfirm, onModalHide }) => {
+	useEffect(() => modal.current.focus());
+	const modal = useRef();
+
 	const handleModalConfirm = () => {
 		onModalConfirm();
+		onModalHide();
 	};
 
 	const handleModalCansel = () => {
-		hideModal();
+		onModalHide();
 	};
 
-	const handleModalHide = (evt) => {
-		evt.target.classList.contains('modal') && hideModal();
+	const handleModalClick = (evt) => {
+		evt.target.classList.contains('modal') && onModalHide();
+	};
+
+	const handleModalKeyDown = (evt) => {
+		evt.keyCode === keyCodeEsc && onModalHide();
 	};
 
 	return (
 		<div
 			className={`modal ${styles.root}`}
 			tabIndex="-1"
-			onClick={handleModalHide}
+			ref={modal}
+			onClick={handleModalClick}
+			onKeyDown={handleModalKeyDown}
 		>
 			<div className="modal-dialog">
 				<div className="modal-content">
@@ -37,7 +44,7 @@ const Modale = ({
 						</button>
 					</div>
 					<div className="modal-body">
-						<p>{modalText}</p>
+						<p>{text}</p>
 					</div>
 					<div className="modal-footer">
 						<button

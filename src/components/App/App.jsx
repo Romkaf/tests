@@ -8,7 +8,7 @@ import {
 import LoginPage from '@components/pages/LoginPage';
 import NotFoundPage from '@components/pages/NotFoundPage';
 import HomePage from '@components/pages/HomePage';
-import ModalContainer from '@components/ModalContainer';
+import ModalContainer from '@components/Modal';
 
 const App = () => {
 	return (

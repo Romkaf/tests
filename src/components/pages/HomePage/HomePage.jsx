@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import TestTable from '../../TestTable';
+import TestTableContainer from '@components/TestTable';
 
 const HomePage = () => {
 	return (
@@ -14,7 +14,7 @@ const HomePage = () => {
 					Log Out
 				</Link>
 			</div>
-			<TestTable />
+			<TestTableContainer />
 		</div>
 	);
 };

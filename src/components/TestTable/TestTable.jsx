@@ -2,10 +2,10 @@ import React from 'react';
 import Row from './Row';
 // import styles from "./TestTable.module.scss";
 
-const TestTable = () => {
+const TestTable = ({ onModalShow }) => {
 	const items = [
-		{ title: 'Химия', date: '17-10-2009' },
-		{ title: 'Физика', date: '17-10-2009' },
+		{ title: 'Химия', date: '17-10-2009', id: 1 },
+		{ title: 'Физика', date: '17-10-2009', id: 2 },
 	];
 
 	return (
@@ -29,7 +29,7 @@ const TestTable = () => {
 
 				<tbody>
 					{items.map((item) => (
-						<Row item={item} />
+						<Row item={item} onModalShow={onModalShow} key={item.id} />
 					))}
 				</tbody>
 			</table>
