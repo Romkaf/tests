@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { showModal, hideModal } from '@models/actions';
+import { hideModal } from '@models/actions';
 import Modal from './Modal';
 
 const ModalContainer = ({ modal, hideModal }) => {

@@ -1,15 +1,22 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 import reducer from '@models/reducers';
+import rootSaga from '@sagas';
 // import { locStorKey } from '@constants';
 
 const initialState = {
 	modal: { isShow: false },
 };
 
+const sagaMiddleware = createSagaMiddleware();
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const store = createStore(
 	reducer,
 	initialState,
-	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+	composeEnhancer(applyMiddleware(sagaMiddleware)),
 );
+
+sagaMiddleware.run(rootSaga);
 
 export default store;
