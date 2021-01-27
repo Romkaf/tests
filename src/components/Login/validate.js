@@ -29,12 +29,14 @@ export const validate = (fields) => {
 		errors.password = REQUIRED;
 	}
 
-	if (fields?.password_confirmation !== fields.password) {
-		errors.password_confirmation = NOT_MATCH;
-	}
+	if (fields.password_confirmation !== undefined) {
+		if (fields.password_confirmation !== fields.password) {
+			errors.password_confirmation = NOT_MATCH;
+		}
 
-	if (!fields.password_confirmation) {
-		errors.password_confirmation = REQUIRED;
+		if (!fields.password_confirmation) {
+			errors.password_confirmation = REQUIRED;
+		}
 	}
 
 	return errors;

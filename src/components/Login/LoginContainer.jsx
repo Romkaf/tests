@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import LoginPage from './LoginPage';
+import Login from './Login';
 import { fetchRegistration, fetchSignin } from '@models/actions';
 
-const LoginPageContainer = ({ fetchRegistration, fetchSignin }) => {
+const LoginContainer = ({ fetchRegistration, fetchSignin }) => {
 	return (
-		<LoginPage
+		<Login
 			onFetchRegistration={fetchRegistration}
 			onFetchSignin={fetchSignin}
 		/>
@@ -13,5 +13,5 @@ const LoginPageContainer = ({ fetchRegistration, fetchSignin }) => {
 };
 
 export default connect(null, { fetchRegistration, fetchSignin })(
-	LoginPageContainer,
+	LoginContainer,
 );
