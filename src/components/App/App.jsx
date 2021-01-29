@@ -5,10 +5,11 @@ import {
 	Route,
 	Switch,
 } from 'react-router-dom';
-import LoginPageContainer from '@components/pages/LoginPage';
+import LoginPage from '@components/pages/LoginPage';
 import NotFoundPage from '@components/pages/NotFoundPage';
 import HomePage from '@components/pages/HomePage';
 import ModalContainer from '@components/Modal';
+import ManagementPage from '@components/pages/ManagementPage';
 
 const App = () => {
 	return (
@@ -17,8 +18,9 @@ const App = () => {
 				<ModalContainer />
 				<Switch>
 					<Redirect exact from="/" to="/login" />
-					<Route exact path="/login" component={LoginPageContainer} />
+					<Route exact path="/login" component={LoginPage} />
 					<Route path="/home" component={HomePage} />
+					<Route path="/management" component={ManagementPage} />
 					<Route component={NotFoundPage} />
 				</Switch>
 			</div>
