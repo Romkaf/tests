@@ -7,3 +7,5 @@ export const SIGNOUT = 'SIGNOUT';
 export const TOGGLE_REGISTRATION = 'TOGGLE_REGISTRATION';
 export const SHOW_ERROR = 'SHOW_ERROR';
 export const HIDE_ERROR = 'HIDE_ERROR';
+export const FETCH_TESTS = 'FETCH_TESTS';
+export const FETCH_TESTS_SUCCESS = 'FETCH_TESTS_SUCCESS';

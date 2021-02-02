@@ -1,22 +1,12 @@
-import { takeEvery, all, call, put, delay } from 'redux-saga/effects';
+import { takeEvery, all, call, put } from 'redux-saga/effects';
 import {
 	FETCH_REGISTRATION,
 	FETCH_SIGNIN,
 	SIGNOUT,
 } from '@models/actions/actionTypes';
 import { fetchSignupUser, fetchSigninUser, fetchSignoutUser } from '@api';
-import {
-	fetchSigninSuccess,
-	toggleRegistration,
-	showError,
-	hideError,
-} from '@models/actions';
-
-function* showAndHideError(text, error) {
-	yield put(showError(`${text} ${error}`));
-	yield delay(4000);
-	yield put(hideError());
-}
+import { fetchSigninSuccess, toggleRegistration } from '@models/actions';
+import { showAndHideError } from './error';
 
 function* workerFetchRegistration({ payload }) {
 	try {
@@ -44,7 +34,7 @@ function* workerFetchSignout() {
 	}
 }
 
-export default function* () {
+export default function* rootSaga() {
 	yield all([
 		takeEvery(FETCH_REGISTRATION, workerFetchRegistration),
 		takeEvery(FETCH_SIGNIN, workerFetchSignin),
