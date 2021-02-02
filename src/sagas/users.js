@@ -1,16 +1,16 @@
-import { takeEvery, all, delay, call } from 'redux-saga/effects';
-import { FETCH_REGISTRATION, FETCH_SIGNIN } from '@models/actions/actionTypes';
+import { takeEvery, all, call, put } from 'redux-saga/effects';
 import {
-	fetchSignupUser,
-	fetchSigninUser,
-	fetchGetUser,
-	fetchCreateTest,
-} from '@api';
+	FETCH_REGISTRATION,
+	FETCH_SIGNIN,
+	SIGNOUT,
+} from '@models/actions/actionTypes';
+import { fetchSignupUser, fetchSigninUser, fetchSignoutUser } from '@api';
+import { fetchSigninSuccess, toggleRegistration } from '@models/actions';
 
 function* workerFetchRegistration({ payload }) {
 	try {
-		const { data } = yield fetchSignupUser(payload);
-		yield console.log(data);
+		yield fetchSignupUser(payload);
+		yield put(toggleRegistration());
 	} catch (error) {
 		yield console.log(error);
 	}
@@ -19,9 +19,15 @@ function* workerFetchRegistration({ payload }) {
 function* workerFetchSignin({ payload }) {
 	try {
 		const { data } = yield fetchSigninUser(payload);
-		yield console.log(data);
-		yield delay(3000);
-		yield call(fetchGetUser);
+		yield put(fetchSigninSuccess(data));
+	} catch (error) {
+		yield console.log(error);
+	}
+}
+
+function* workerFetchSignout() {
+	try {
+		yield call(fetchSignoutUser);
 	} catch (error) {
 		yield console.log(error);
 	}
@@ -31,5 +37,6 @@ export default function* () {
 	yield all([
 		takeEvery(FETCH_REGISTRATION, workerFetchRegistration),
 		takeEvery(FETCH_SIGNIN, workerFetchSignin),
+		takeEvery(SIGNOUT, workerFetchSignout),
 	]);
 }

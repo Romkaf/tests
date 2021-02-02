@@ -5,7 +5,7 @@ export default axios.create({
 	withCredentials: true,
 	baseURL,
 	headers: {
-		'Content-Type': 'application/json;charset=utf-8',
+		'Content-Type': 'application/json',
 		'scope-key': `${scopeKey}`,
 	},
 	responseType: 'json',

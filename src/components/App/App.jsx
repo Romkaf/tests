@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
 	BrowserRouter as Router,
 	Redirect,
@@ -11,15 +12,22 @@ import HomePage from '@components/pages/HomePage';
 import ModalContainer from '@components/Modal';
 import ManagementPage from '@components/pages/ManagementPage';
 
-const App = () => {
+const App = ({ user }) => {
 	return (
 		<Router>
 			<div className="container">
 				<ModalContainer />
 				<Switch>
-					<Redirect exact from="/" to="/login" />
-					<Route exact path="/login" component={LoginPage} />
-					<Route path="/home" component={HomePage} />
+					<Route
+						exact
+						from="/"
+						render={() => (user ? <HomePage /> : <Redirect to="/login" />)}
+					/>
+					<Route
+						exact
+						path="/login"
+						render={() => (user ? <Redirect to="/" /> : <LoginPage />)}
+					/>
 					<Route path="/management" component={ManagementPage} />
 					<Route component={NotFoundPage} />
 				</Switch>

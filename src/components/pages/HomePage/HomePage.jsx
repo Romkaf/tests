@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import TestTableContainer from '@components/TestTable';
 
-const HomePage = () => {
+const HomePage = ({ onSignOut }) => {
 	return (
 		<div>
 			<div
@@ -10,7 +10,11 @@ const HomePage = () => {
      border-bottom"
 			>
 				<h2 className="my-0 mr-md-auto font-weight-normal">Tests</h2>
-				<Link className="btn btn-primary ml-auto" to="/login">
+				<Link
+					className="btn btn-primary ml-auto"
+					to="/login"
+					onClick={onSignOut}
+				>
 					Log Out
 				</Link>
 			</div>

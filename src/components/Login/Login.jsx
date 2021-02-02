@@ -5,13 +5,17 @@ import styles from './Login.module.scss';
 import Button from './Button/Button';
 import { validate } from './validate';
 
-const Login = ({ onFetchRegistration, onFetchSignin }) => {
-	const [isRegist, setIsRegist] = useState(true);
+const Login = ({
+	onFetchRegistration,
+	onFetchSignin,
+	onToggleRegistration,
+	isRegistrated,
+}) => {
 	const [errors, setErrors] = useState({});
 	const { userName, password, passwordConfirmation, admin } = INPUTS_ID;
 
 	const handleBtnClick = (evt) => {
-		setIsRegist((state) => !state);
+		onToggleRegistration();
 		setErrors({});
 		evt.target.blur();
 	};
@@ -32,8 +36,6 @@ const Login = ({ onFetchRegistration, onFetchSignin }) => {
 	const validateData = (data, func) => {
 		const formErrors = validate(data);
 		setErrors(formErrors);
-		console.log(data);
-		console.log(formErrors);
 		if (Object.keys(formErrors).length === 0) {
 			func(data);
 		}
@@ -65,7 +67,7 @@ const Login = ({ onFetchRegistration, onFetchSignin }) => {
 				error={errors?.password}
 			/>
 
-			{!isRegist && (
+			{!isRegistrated && (
 				<InputField
 					type="password"
 					id={passwordConfirmation}
@@ -73,7 +75,7 @@ const Login = ({ onFetchRegistration, onFetchSignin }) => {
 					error={errors?.password_confirmation}
 				/>
 			)}
-			{isRegist ? (
+			{isRegistrated ? (
 				<>
 					<Button label="Log In" func={handleLoginClick} color="primary" />
 					<Button
