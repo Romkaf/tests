@@ -1,0 +1,19 @@
+@mixin hoverSupport() {
+	@media (hover), (min-width: 0\0), (min--moz-device-pixel-ratio: 0) {
+		&:hover {
+			@content;
+		}
+	}
+}
+
+@mixin media-tablet {
+	@media (max-width: 700px) {
+		@content;
+	}
+}
+
+@mixin media-mobile {
+	@media (max-width: 500px) {
+		@content;
+	}
+}

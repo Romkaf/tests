@@ -5,3 +5,5 @@ export const FETCH_SIGNIN = 'FETCH_SIGNIN';
 export const FETCH_SIGNIN_SUCCESS = 'FETCH_SIGNIN_SUCCESS';
 export const SIGNOUT = 'SIGNOUT';
 export const TOGGLE_REGISTRATION = 'TOGGLE_REGISTRATION';
+export const SHOW_ERROR = 'SHOW_ERROR';
+export const HIDE_ERROR = 'HIDE_ERROR';

@@ -11,11 +11,13 @@ import NotFoundPage from '@components/pages/NotFoundPage';
 import HomePage from '@components/pages/HomePage';
 import ModalContainer from '@components/Modal';
 import ManagementPage from '@components/pages/ManagementPage';
+import ErrorIndicator from '@components/ErrorIndicator';
 
-const App = ({ user }) => {
+const App = ({ user, error }) => {
 	return (
 		<Router>
 			<div className="container">
+				{error && <ErrorIndicator text={error} />}
 				<ModalContainer />
 				<Switch>
 					<Route

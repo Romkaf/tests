@@ -1,18 +1,29 @@
-import { takeEvery, all, call, put } from 'redux-saga/effects';
+import { takeEvery, all, call, put, delay } from 'redux-saga/effects';
 import {
 	FETCH_REGISTRATION,
 	FETCH_SIGNIN,
 	SIGNOUT,
 } from '@models/actions/actionTypes';
 import { fetchSignupUser, fetchSigninUser, fetchSignoutUser } from '@api';
-import { fetchSigninSuccess, toggleRegistration } from '@models/actions';
+import {
+	fetchSigninSuccess,
+	toggleRegistration,
+	showError,
+	hideError,
+} from '@models/actions';
+
+function* showAndHideError(text, error) {
+	yield put(showError(`${text} ${error}`));
+	yield delay(4000);
+	yield put(hideError());
+}
 
 function* workerFetchRegistration({ payload }) {
 	try {
 		yield fetchSignupUser(payload);
 		yield put(toggleRegistration());
 	} catch (error) {
-		yield console.log(error);
+		yield showAndHideError('Регистрация не удалась!', error);
 	}
 }
 
@@ -21,7 +32,7 @@ function* workerFetchSignin({ payload }) {
 		const { data } = yield fetchSigninUser(payload);
 		yield put(fetchSigninSuccess(data));
 	} catch (error) {
-		yield console.log(error);
+		yield showAndHideError('Авторизация не удалась!', error);
 	}
 }
 
