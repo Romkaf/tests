@@ -2,10 +2,10 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import reducer from '@models/reducers';
 import rootSaga from '@sagas';
-// import { locStorKey } from '@constants';
+import { locStorKey } from '@constants';
 
 const initialState = {
-	modal: { isShow: false },
+	user: JSON.parse(localStorage.getItem(locStorKey)) || null,
 };
 
 const sagaMiddleware = createSagaMiddleware();

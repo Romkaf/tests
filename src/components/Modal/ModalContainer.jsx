@@ -4,7 +4,7 @@ import { hideModal } from '@models/actions';
 import Modal from './Modal';
 
 const ModalContainer = ({ modal, hideModal }) => {
-	if (!modal.isShow) {
+	if (!modal) {
 		return false;
 	}
 
