@@ -1,8 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { MODAL_QUEST_RUN_TEST } from '@constants';
 
-const Row = ({ item, onModalShow }) => {
+const Row = ({ item, onModalShow, isAdmin }) => {
 	const { title, date, id } = item;
 	const history = useHistory();
 
@@ -21,15 +22,23 @@ const Row = ({ item, onModalShow }) => {
 			<td>{title}</td>
 			<td>{date}</td>
 			<td>
-				<button
-					className="btn btn-sm btn-outline-secondary float-right"
-					onClick={handleBtnClick}
-				>
-					<i className="bi bi-pencil-square" />
-				</button>
+				{isAdmin && (
+					<button
+						className="btn btn-sm btn-outline-secondary float-right"
+						onClick={handleBtnClick}
+					>
+						<i className="bi bi-pencil-square" />
+					</button>
+				)}
 			</td>
 		</tr>
 	);
+};
+
+Row.propTypes = {
+	item: PropTypes.object,
+	onModalShow: PropTypes.func,
+	isAdmin: PropTypes.bool,
 };
 
 export default Row;
