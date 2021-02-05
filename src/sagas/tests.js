@@ -20,11 +20,10 @@ function* workerFetchGetTests() {
 
 function* workerFetchPostTest({ payload }) {
 	try {
-		yield console.log(payload);
 		const { data } = yield fetchCreateTest(payload);
-		yield console.log(data);
+		yield put(addTest(data));
 	} catch (error) {
-		yield console.log(error);
+		yield showAndHideError('Не удалось загрузить данные на сервер', error);
 	}
 }
 

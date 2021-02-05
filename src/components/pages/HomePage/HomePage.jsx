@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import TestTableContainer from '@components/TestTable';
+import InputGroup from '../../InputGroup/InputGroup';
+import PropTypes from 'prop-types';
 
-const HomePage = ({ onSignOut }) => {
+const HomePage = ({ onSignOut, onRequestAddTest, isAdmin }) => {
+	const [isNewTest, setIsNewTest] = useState(false);
+
+	const handleNewTestShow = () => {
+		setIsNewTest(true);
+	};
+
+	const handleNewTestHide = () => {
+		setIsNewTest(false);
+	};
+
+	const handleNewTestCreate = (data) => {
+		onRequestAddTest(data);
+	};
+
 	return (
 		<div>
 			<div
@@ -18,9 +34,31 @@ const HomePage = ({ onSignOut }) => {
 					Log Out
 				</Link>
 			</div>
+			<InputGroup
+				title="Filter"
+				btnTitle1="Sort by date"
+				btnTitle2="New Test"
+				funcBtn2={handleNewTestShow}
+			/>
+			{isNewTest && (
+				<InputGroup
+					title="Test title"
+					btnTitle1="Cansel"
+					btnTitle2="Create"
+					funcBtn1={handleNewTestHide}
+					funcBtn2={handleNewTestCreate}
+					isAdmin={isAdmin}
+				/>
+			)}
 			<TestTableContainer />
 		</div>
 	);
+};
+
+HomePage.propTypes = {
+	onSignOut: PropTypes.func,
+	onRequestAddTest: PropTypes.func,
+	isAdmin: PropTypes.bool,
 };
 
 export default HomePage;

@@ -3,13 +3,16 @@ import QuestionItem from './QuestionItem/QuestionItem';
 
 const QuestionList = ({ questions }) => {
 	return (
-		<ol className="container pr-0">
-			{questions.map((it) => (
-				<li className="alert alert-light" key={it.title}>
-					<QuestionItem title={it.title} />
-				</li>
-			))}
-		</ol>
+		<>
+			<h5>Questions:</h5>
+			<ol className="container pr-0">
+				{questions.map((it) => (
+					<li className="alert alert-light" key={it.title}>
+						<QuestionItem title={it.title} />
+					</li>
+				))}
+			</ol>
+		</>
 	);
 };
 

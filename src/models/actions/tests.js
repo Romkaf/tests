@@ -12,9 +12,9 @@ export const fetchTestsSuccess = (tests) => ({
 	payload: tests,
 });
 
-export const requestAddTest = (title) => ({
+export const requestAddTest = (data) => ({
 	type: REQUEST_ADD_TEST,
-	payload: title,
+	payload: data,
 });
 
-export const addTest = (title) => ({ type: ADD_TEST, payload: title });
+export const addTest = (data) => ({ type: ADD_TEST, payload: data });

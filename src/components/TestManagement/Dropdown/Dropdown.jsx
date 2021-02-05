@@ -10,7 +10,7 @@ const Dropdown = () => {
 	};
 
 	return (
-		<div className="position-relative d-inline-block p-2 pl-3">
+		<div className="position-relative d-inline-block mb-3 mt-1">
 			<button onClick={handleDropBtnClick} className="btn btn-primary">
 				Add question
 				<i className="bi bi-caret-down-fill ml-3"></i>

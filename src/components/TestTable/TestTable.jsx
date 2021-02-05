@@ -1,7 +1,6 @@
 import React from 'react';
 import Row from './Row';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 const TestTable = ({ onModalShow, tests, isAdmin }) => {
 	const items = [
@@ -11,21 +10,6 @@ const TestTable = ({ onModalShow, tests, isAdmin }) => {
 
 	return (
 		<div>
-			<div className="d-flex flex-wrap pl-3 pr-3 mb-2 justify-content-start align-items-baseline">
-				<label className="font-weight-bold">
-					Filter
-					<input type="text" className="ml-3" />
-				</label>
-				<div className="mt-1 mb-1">
-					<button className="btn btn-sm btn-primary ml-4">Sort by date</button>
-					{isAdmin && (
-						<Link to="/management" className="btn btn-sm btn-primary ml-4">
-							Add test
-						</Link>
-					)}
-				</div>
-			</div>
-
 			<table className="table">
 				<thead>
 					<tr>

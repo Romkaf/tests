@@ -5,7 +5,7 @@ import FormQuestion from './FormQuestion/FormQuestion';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const TestManagement = ({ test, onRequestAddTest }) => {
+const TestManagement = ({ test }) => {
 	const [value, setValue] = useState(test?.title || '');
 
 	const questions = [
@@ -18,13 +18,7 @@ const TestManagement = ({ test, onRequestAddTest }) => {
 		setValue(evt.target.value);
 	};
 
-	const handleBtnCreate = () => {
-		onRequestAddTest({ title: value });
-	};
-
-	const handleBtnSave = () => {
-		// onRequestEditTest(test?.id);
-	};
+	const handleBtnSave = () => {};
 
 	return (
 		<div>
@@ -32,29 +26,23 @@ const TestManagement = ({ test, onRequestAddTest }) => {
 				<label>Test :</label>
 				<input
 					type="text"
-					className="form-control ml-2 rounded"
+					className="form-control ml-2 rounded shadow-sm"
 					value={value}
 					onChange={handleInputChange}
 				/>
 			</h4>
 			<div className="btn-group mb-3">
 				<button className="btn btn-secondary">Delete</button>
-				{test ? (
-					<button className="btn btn-primary" onClick={handleBtnSave}>
-						Save
-					</button>
-				) : (
-					<button className="btn btn-primary" onClick={handleBtnCreate}>
-						Create
-					</button>
-				)}
+
+				<button className="btn btn-primary" onClick={handleBtnSave}>
+					Save
+				</button>
 			</div>
 			<Link to="/" className="btn btn-primary mb-3 float-right">
 				To home
 			</Link>
 			<div>
-				<h5>Questions:</h5>
-				<QuestionList questions={questions} />
+				<QuestionList questions={test?.questions || []} />
 				<Dropdown />
 				<FormQuestion questionType={null} question={null} />
 			</div>
@@ -64,7 +52,6 @@ const TestManagement = ({ test, onRequestAddTest }) => {
 
 TestManagement.propTypes = {
 	test: PropTypes.object || null,
-	onRequestAddTest: PropTypes.func,
 };
 
 export default TestManagement;
