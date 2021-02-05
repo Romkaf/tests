@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import QuestionList from './QuestionList';
 import Dropdown from './Dropdown';
 import FormQuestion from './FormQuestion/FormQuestion';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const TestManagement = ({ test }) => {
+const TestManagement = ({ test, onRequestAddTest }) => {
 	const [value, setValue] = useState(test?.title || '');
-	const history = useHistory();
+
 	const questions = [
 		{ title: 'Сколько глаз у человека?', question_type: 'single', answer: 2 },
 		{ title: 'Выберите русские города?', question_type: 'multiple', answer: 4 },
@@ -17,8 +18,12 @@ const TestManagement = ({ test }) => {
 		setValue(evt.target.value);
 	};
 
+	const handleBtnCreate = () => {
+		onRequestAddTest({ title: value });
+	};
+
 	const handleBtnSave = () => {
-		history.push(`/home`);
+		// onRequestEditTest(test?.id);
 	};
 
 	return (
@@ -34,10 +39,19 @@ const TestManagement = ({ test }) => {
 			</h4>
 			<div className="btn-group mb-3">
 				<button className="btn btn-secondary">Delete</button>
-				<button className="btn btn-primary" onClick={handleBtnSave}>
-					Save
-				</button>
+				{test ? (
+					<button className="btn btn-primary" onClick={handleBtnSave}>
+						Save
+					</button>
+				) : (
+					<button className="btn btn-primary" onClick={handleBtnCreate}>
+						Create
+					</button>
+				)}
 			</div>
+			<Link to="/" className="btn btn-primary mb-3 float-right">
+				To home
+			</Link>
 			<div>
 				<h5>Questions:</h5>
 				<QuestionList questions={questions} />
@@ -46,6 +60,11 @@ const TestManagement = ({ test }) => {
 			</div>
 		</div>
 	);
+};
+
+TestManagement.propTypes = {
+	test: PropTypes.object || null,
+	onRequestAddTest: PropTypes.func,
 };
 
 export default TestManagement;

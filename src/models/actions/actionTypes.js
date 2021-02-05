@@ -9,3 +9,5 @@ export const SHOW_ERROR = 'SHOW_ERROR';
 export const HIDE_ERROR = 'HIDE_ERROR';
 export const FETCH_TESTS = 'FETCH_TESTS';
 export const FETCH_TESTS_SUCCESS = 'FETCH_TESTS_SUCCESS';
+export const REQUEST_ADD_TEST = 'REQUEST_ADD_TEST';
+export const ADD_TEST = 'ADD_TEST';

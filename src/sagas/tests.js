@@ -1,7 +1,7 @@
 import { takeEvery, all, call, put, delay } from 'redux-saga/effects';
-import { fetchGetTests } from '@api';
-import { fetchTestsSuccess } from '@models/actions';
-import { FETCH_TESTS } from '@models/actions/actionTypes';
+import { fetchGetTests, fetchCreateTest } from '@api';
+import { fetchTestsSuccess, addTest } from '@models/actions';
+import { FETCH_TESTS, REQUEST_ADD_TEST } from '@models/actions/actionTypes';
 import { showAndHideError } from './error';
 
 function* workerFetchGetTests() {
@@ -18,6 +18,19 @@ function* workerFetchGetTests() {
 	}
 }
 
+function* workerFetchPostTest({ payload }) {
+	try {
+		yield console.log(payload);
+		const { data } = yield fetchCreateTest(payload);
+		yield console.log(data);
+	} catch (error) {
+		yield console.log(error);
+	}
+}
+
 export default function* () {
-	yield all([takeEvery(FETCH_TESTS, workerFetchGetTests)]);
+	yield all([
+		takeEvery(FETCH_TESTS, workerFetchGetTests),
+		takeEvery(REQUEST_ADD_TEST, workerFetchPostTest),
+	]);
 }

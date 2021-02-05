@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { MODAL_QUEST_RUN_TEST } from '@constants';
 
 const Row = ({ item, onModalShow, isAdmin }) => {
-	const { title, date, id } = item;
+	const { title, created_at, id } = item;
+	const date = new Date(created_at).toLocaleDateString();
 	const history = useHistory();
 
 	const handleRowClick = (evt) => {
@@ -13,9 +14,9 @@ const Row = ({ item, onModalShow, isAdmin }) => {
 			onModalShow(MODAL_QUEST_RUN_TEST, handleTestStart);
 	};
 
-	const handleBtnClick = () => history.push(`/edit${id}`);
+	const handleBtnEditClick = () => history.push(`/management/${id}`);
 
-	const handleTestStart = () => history.push(`/test${id}`);
+	const handleTestStart = () => history.push(`/tests/${id}`);
 
 	return (
 		<tr className="btn-light" tabIndex="0" onClick={handleRowClick}>
@@ -25,7 +26,8 @@ const Row = ({ item, onModalShow, isAdmin }) => {
 				{isAdmin && (
 					<button
 						className="btn btn-sm btn-outline-secondary float-right"
-						onClick={handleBtnClick}
+						title="Edit"
+						onClick={handleBtnEditClick}
 					>
 						<i className="bi bi-pencil-square" />
 					</button>

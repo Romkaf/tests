@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { showModal, fetchTests } from '@models/actions';
 
-const TestTableContainer = ({ showModal, tests, fetchTests, isAdmin }) => {
+const TestTableContainer = ({ showModal, tests, isAdmin, fetchTests }) => {
 	useEffect(() => fetchTests(), []);
 
 	return <TestTable onModalShow={showModal} tests={tests} isAdmin={isAdmin} />;

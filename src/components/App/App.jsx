@@ -30,7 +30,12 @@ const App = ({ user, error }) => {
 						path="/login"
 						render={() => (user ? <Redirect to="/" /> : <LoginPage />)}
 					/>
-					<Route path="/management" component={ManagementPage} />
+					<Route path="/management" exact component={ManagementPage} />
+					<Route
+						path="/management/:id"
+						render={({ match }) => <ManagementPage id={match?.params.id} />}
+					/>
+					{/* <Route path="/management" component={ManagementPage} /> */}
 					<Route component={NotFoundPage} />
 				</Switch>
 			</div>

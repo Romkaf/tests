@@ -1,13 +1,27 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import TestManagement from './TestManagement';
+import { requestAddTest } from '@models/actions';
+import PropTypes from 'prop-types';
 
-const TestManagementContainer = () => {
-	const test = { title: 'Экспериментальный', id: 22 };
+const TestManagementContainer = ({ requestAddTest, tests, id }) => {
+	const test = tests.find((it) => it.id === +id) || null;
+
 	return (
 		<div className="pt-4 pb-4">
-			<TestManagement test={test} />
+			<TestManagement test={test} onRequestAddTest={requestAddTest} />
 		</div>
 	);
 };
 
-export default TestManagementContainer;
+TestManagementContainer.propTypes = {
+	requestAddTest: PropTypes.func,
+	tests: PropTypes.array,
+	id: PropTypes.string,
+};
+
+const actions = { requestAddTest };
+
+const mapStateToProps = ({ tests }) => ({ tests });
+
+export default connect(mapStateToProps, actions)(TestManagementContainer);

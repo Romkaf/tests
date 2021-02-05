@@ -4,8 +4,16 @@ import reducer from '@models/reducers';
 import rootSaga from '@sagas';
 import { locStorKey } from '@constants';
 
-const initialState = {
-	user: JSON.parse(localStorage.getItem(locStorKey)) || null,
+// const initialState = {
+// 	user: JSON.parse(localStorage.getItem(locStorKey)) || null,
+// };
+
+const initialState = JSON.parse(localStorage.getItem(locStorKey)) || {
+	user: null,
+	tests: [],
+	error: '',
+	modal: false,
+	registration: true,
 };
 
 const sagaMiddleware = createSagaMiddleware();

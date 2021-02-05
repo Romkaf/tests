@@ -4,7 +4,12 @@ import {
 	FETCH_SIGNIN,
 	SIGNOUT,
 } from '@models/actions/actionTypes';
-import { fetchSignupUser, fetchSigninUser, fetchSignoutUser } from '@api';
+import {
+	fetchSignupUser,
+	fetchSigninUser,
+	fetchSignoutUser,
+	fetchGetUser,
+} from '@api';
 import { fetchSigninSuccess, toggleRegistration } from '@models/actions';
 import { showAndHideError } from './error';
 
@@ -21,6 +26,7 @@ function* workerFetchSignin({ payload }) {
 	try {
 		const { data } = yield fetchSigninUser(payload);
 		yield put(fetchSigninSuccess(data));
+		yield fetchGetUser();
 	} catch (error) {
 		yield showAndHideError('Авторизация не удалась!', error);
 	}

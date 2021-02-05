@@ -4,7 +4,7 @@ export const baseURL = 'https://snp-tests.herokuapp.com/api/v1/';
 export const mockURL = 'http://localhost:3200/users';
 export const scopeKey = '?J_8TB]Eej:GVqR';
 export const LOGIN_FORM = 'LOGIN_FORM';
-export const locStorKey = 'userStore';
+export const locStorKey = 'testsLocStore';
 
 export const INPUTS_ID = {
 	userName: 'username',
