@@ -38,7 +38,7 @@ const TestManagement = ({ test }) => {
 					Save
 				</button>
 			</div>
-			<Link to="/" className="btn btn-primary mb-3 float-right">
+			<Link to="/tests" className="btn btn-primary mb-3 float-right">
 				To home
 			</Link>
 			<div>

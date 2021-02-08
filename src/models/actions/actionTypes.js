@@ -11,3 +11,4 @@ export const FETCH_TESTS = 'FETCH_TESTS';
 export const FETCH_TESTS_SUCCESS = 'FETCH_TESTS_SUCCESS';
 export const REQUEST_ADD_TEST = 'REQUEST_ADD_TEST';
 export const ADD_TEST = 'ADD_TEST';
+export const CHANGE_FILTER = 'CHANGE_FILTER';

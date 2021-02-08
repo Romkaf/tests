@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useSelector } from 'react';
 import PropTypes from 'prop-types';
 import styles from './InputGroup.module.scss';
 import classnames from 'classnames';
+import { useHistory } from 'react-router-dom';
 
 const InputGroup = ({
 	title,
@@ -10,28 +11,43 @@ const InputGroup = ({
 	funcBtn1,
 	funcBtn2,
 	isAdmin = true,
+	onChangeFilter,
 }) => {
 	const [value, setValue] = useState('');
 	const [error, setError] = useState(false);
+	const history = useHistory();
 	const classInput = classnames('form-control', 'mr-2', 'shadow-sm', {
 		'is-invalid': error,
 	});
 
-	const handleInputChange = (evt) => setValue(evt.target.value);
+	const handleFilterChange = (value) => {
+		onChangeFilter(value);
+		history.push(`/tests?search=${value}`);
+	};
+
+	const handleInputChange = (evt) => {
+		setValue(evt.target.value);
+		title === 'Filter' && handleFilterChange(evt.target.value);
+	};
+
 	const handleBtn1Click = () => {
 		title === 'Filter' ? console.log('CLICK on Sort by date') : funcBtn1();
 	};
+
+	const handleBtnCreateClick = () => {
+		if (!value) {
+			setError(true);
+		} else {
+			setError(false);
+			funcBtn2({ title: value });
+		}
+	};
+
 	const handleBtn2Click = () => {
 		if (title === 'Filter') {
 			funcBtn2();
 		} else {
-			if (!value) {
-				setError(true);
-				return;
-			} else {
-				setError(false);
-				funcBtn2({ title: value });
-			}
+			handleBtnCreateClick();
 		}
 	};
 
@@ -53,11 +69,11 @@ const InputGroup = ({
 				{error && <div className={styles.error}>Required to fill</div>}
 			</div>
 			<div className="btn-group p-2">
-				<button className="btn btn-sm btn-secondary" onClick={handleBtn1Click}>
+				<button className="btn btn-secondary" onClick={handleBtn1Click}>
 					{btnTitle1}
 				</button>
 				{isAdmin && (
-					<button className="btn btn-sm btn-primary" onClick={handleBtn2Click}>
+					<button className="btn btn-primary" onClick={handleBtn2Click}>
 						{btnTitle2}
 					</button>
 				)}

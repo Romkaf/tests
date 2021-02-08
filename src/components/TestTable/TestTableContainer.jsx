@@ -4,10 +4,23 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { showModal, fetchTests } from '@models/actions';
 
-const TestTableContainer = ({ showModal, tests, isAdmin, fetchTests }) => {
+const TestTableContainer = ({
+	showModal,
+	tests,
+	isAdmin,
+	filter,
+	fetchTests,
+}) => {
 	useEffect(() => fetchTests(), []);
 
-	return <TestTable onModalShow={showModal} tests={tests} isAdmin={isAdmin} />;
+	const isInclude = (str) => str.toUpperCase().includes(filter.toUpperCase());
+	const visibleTests = filter
+		? tests.filter((it) => isInclude(it.title))
+		: tests;
+
+	return (
+		<TestTable onModalShow={showModal} tests={visibleTests} isAdmin={isAdmin} />
+	);
 };
 
 TestTableContainer.propTypes = {
@@ -15,6 +28,7 @@ TestTableContainer.propTypes = {
 	fetchTests: PropTypes.func,
 	showModal: PropTypes.func,
 	isAdmin: PropTypes.bool,
+	filter: PropTypes.string,
 };
 
 const actions = {
@@ -22,9 +36,10 @@ const actions = {
 	fetchTests,
 };
 
-const mapStateToProps = ({ tests, user }) => ({
+const mapStateToProps = ({ tests, user, filter }) => ({
 	tests,
 	isAdmin: user.is_admin,
+	filter,
 });
 
 export default connect(mapStateToProps, actions)(TestTableContainer);

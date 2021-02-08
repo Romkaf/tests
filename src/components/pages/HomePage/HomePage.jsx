@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import TestTableContainer from '@components/TestTable';
-import InputGroup from '../../InputGroup/InputGroup';
+import InputGroup from '@components/InputGroup';
 import PropTypes from 'prop-types';
 
 const HomePage = ({ onSignOut, onRequestAddTest, isAdmin }) => {

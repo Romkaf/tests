@@ -4,6 +4,7 @@ import user from './user';
 import registration from './registration';
 import error from './error';
 import tests from './tests';
+import filter from './filter';
 
 export default combineReducers({
 	modal,
@@ -11,4 +12,5 @@ export default combineReducers({
 	registration,
 	error,
 	tests,
+	filter,
 });

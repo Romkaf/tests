@@ -22,20 +22,31 @@ const App = ({ user, error }) => {
 				<Switch>
 					<Route
 						exact
-						from="/"
-						render={() => (user ? <HomePage /> : <Redirect to="/login" />)}
+						path="/"
+						render={() =>
+							user ? <Redirect to="/tests" /> : <Redirect to="/login" />
+						}
 					/>
 					<Route
 						exact
 						path="/login"
-						render={() => (user ? <Redirect to="/" /> : <LoginPage />)}
+						render={() => (user ? <Redirect to="/tests" /> : <LoginPage />)}
 					/>
-					<Route path="/management" exact component={ManagementPage} />
 					<Route
-						path="/management/:id"
+						path={['/tests/:id', '/tests']}
+						children={({ match }) =>
+							match?.params.id ? (
+								<div>{`Test execution screen`}</div>
+							) : (
+								<HomePage />
+							)
+						}
+					/>
+					<Route
+						path={['/management/:id', '/management']}
 						render={({ match }) => <ManagementPage id={match?.params.id} />}
 					/>
-					{/* <Route path="/management" component={ManagementPage} /> */}
+
 					<Route component={NotFoundPage} />
 				</Switch>
 			</div>
