@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from './FormAnswer.module.scss';
 
 const FormAnswer = ({ answer, questionType }) => {
 	const [value, setValue] = useState(answer?.text || '');
@@ -24,6 +25,10 @@ const FormAnswer = ({ answer, questionType }) => {
 					onChange={handleCheckboxChange}
 				/>
 			</div>
+
+			<button title="Delete answer" className={styles.btn}>
+				&#65794;
+			</button>
 		</div>
 	);
 };

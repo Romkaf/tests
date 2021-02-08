@@ -1,10 +1,16 @@
 import { takeEvery, all, call, put, delay } from 'redux-saga/effects';
-import { fetchGetTests, fetchCreateTest } from '@api';
-import { fetchTestsSuccess, addTest, addSortTests } from '@models/actions';
+import { fetchGetTests, fetchCreateTest, fetchDeleteTest } from '@api';
+import {
+	fetchTestsSuccess,
+	addTest,
+	addSortTests,
+	deleteTest,
+} from '@models/actions';
 import {
 	FETCH_TESTS,
 	REQUEST_ADD_TEST,
 	SORT_TESTS,
+	REQUEST_DELETE_TEST,
 } from '@models/actions/actionTypes';
 import { showAndHideError } from './error';
 
@@ -45,10 +51,21 @@ function* workerFetchGetSortTest({ payload }) {
 	}
 }
 
+function* workerFetchDeleteTest({ payload }) {
+	try {
+		const { data } = yield fetchDeleteTest(payload);
+		yield console.log(data);
+		yield put(deleteTest(payload));
+	} catch (error) {
+		yield showAndHideError('Не удалось удалить тест на сервере', error);
+	}
+}
+
 export default function* () {
 	yield all([
 		takeEvery(FETCH_TESTS, workerFetchGetTests),
 		takeEvery(REQUEST_ADD_TEST, workerFetchPostTest),
 		takeEvery(SORT_TESTS, workerFetchGetSortTest),
+		takeEvery(REQUEST_DELETE_TEST, workerFetchDeleteTest),
 	]);
 }

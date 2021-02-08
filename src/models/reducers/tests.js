@@ -2,6 +2,7 @@ import {
 	FETCH_TESTS_SUCCESS,
 	ADD_TEST,
 	ADD_SORT_TESTS,
+	DELETE_TEST,
 } from '@models/actions/actionTypes';
 
 export default (state = [], action) => {
@@ -14,6 +15,9 @@ export default (state = [], action) => {
 
 		case ADD_TEST:
 			return [...state, action.payload];
+
+		case DELETE_TEST:
+			return state.filter((it) => action.payload !== it.id);
 
 		default:
 			return state;

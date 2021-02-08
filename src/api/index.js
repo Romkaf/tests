@@ -11,3 +11,4 @@ export const fetchSignoutUser = () => deleteRequest(`/logout`);
 export const fetchGetUser = () => getRequest('/users/current');
 export const fetchCreateTest = (data) => postRequest(`/tests`, data);
 export const fetchGetTests = (param = '') => getRequest(`/tests${param}`);
+export const fetchDeleteTest = (id) => deleteRequest(`/tests/${id}`);

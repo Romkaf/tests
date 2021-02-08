@@ -3,8 +3,8 @@ import {
 	FETCH_TESTS_SUCCESS,
 	REQUEST_ADD_TEST,
 	ADD_TEST,
-	// SORT_DESC_TESTS,
-	// SORT_ASC_TESTS,
+	REQUEST_DELETE_TEST,
+	DELETE_TEST,
 	SORT_TESTS,
 	ADD_SORT_TESTS,
 } from './actionTypes';
@@ -23,11 +23,16 @@ export const requestAddTest = (data) => ({
 
 export const addTest = (data) => ({ type: ADD_TEST, payload: data });
 
-// export const sortDescTests = () => ({ type: SORT_DESC_TESTS });
-// export const sortAscTests = () => ({ type: SORT_ASC_TESTS });
 export const sortTests = (str) => ({ type: SORT_TESTS, payload: str });
 
 export const addSortTests = (tests) => ({
 	type: ADD_SORT_TESTS,
 	payload: tests,
 });
+
+export const requestDeleteTest = (id) => ({
+	type: REQUEST_DELETE_TEST,
+	payload: id,
+});
+
+export const deleteTest = (id) => ({ type: DELETE_TEST, payload: id });

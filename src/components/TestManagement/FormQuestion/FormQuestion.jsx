@@ -31,6 +31,9 @@ const FormQuestion = ({ questionType = 'single', question = null }) => {
 					</li>
 				))}
 			</ol>
+			<button className="btn btn-primary float-right" title="Add answer">
+				<i className="bi bi-plus-circle" />
+			</button>
 			<div className="btn-group">
 				<button className="btn btn-secondary">Cansel</button>
 				<button className="btn btn-primary">Save</button>
