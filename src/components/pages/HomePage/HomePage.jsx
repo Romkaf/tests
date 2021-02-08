@@ -4,7 +4,7 @@ import TestTableContainer from '@components/TestTable';
 import InputGroup from '@components/InputGroup';
 import PropTypes from 'prop-types';
 
-const HomePage = ({ onSignOut, onRequestAddTest, isAdmin }) => {
+const HomePage = ({ onSignOut, onRequestAddTest, isAdmin, onTestsSort }) => {
 	const [isNewTest, setIsNewTest] = useState(false);
 
 	const handleNewTestShow = () => {
@@ -18,6 +18,21 @@ const HomePage = ({ onSignOut, onRequestAddTest, isAdmin }) => {
 	const handleNewTestCreate = (data) => {
 		onRequestAddTest(data);
 	};
+
+	const wrapperTestsSort = () => {
+		let isSort;
+		return function () {
+			if (isSort) {
+				onTestsSort('created_at_desc');
+				isSort = false;
+			} else {
+				onTestsSort('created_at_asc');
+				isSort = true;
+			}
+		};
+	};
+
+	const handleTestsSort = wrapperTestsSort();
 
 	return (
 		<div>
@@ -38,6 +53,7 @@ const HomePage = ({ onSignOut, onRequestAddTest, isAdmin }) => {
 				title="Filter"
 				btnTitle1="Sort by date"
 				btnTitle2="New Test"
+				funcBtn1={handleTestsSort}
 				funcBtn2={handleNewTestShow}
 			/>
 			{isNewTest && (
@@ -59,6 +75,7 @@ HomePage.propTypes = {
 	onSignOut: PropTypes.func,
 	onRequestAddTest: PropTypes.func,
 	isAdmin: PropTypes.bool,
+	onTestsSort: PropTypes.func,
 };
 
 export default HomePage;

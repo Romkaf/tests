@@ -30,10 +30,6 @@ const InputGroup = ({
 		title === 'Filter' && handleFilterChange(evt.target.value);
 	};
 
-	const handleBtn1Click = () => {
-		title === 'Filter' ? console.log('CLICK on Sort by date') : funcBtn1();
-	};
-
 	const handleBtnCreateClick = () => {
 		if (!value) {
 			setError(true);
@@ -69,7 +65,7 @@ const InputGroup = ({
 				{error && <div className={styles.error}>Required to fill</div>}
 			</div>
 			<div className="btn-group p-2">
-				<button className="btn btn-secondary" onClick={handleBtn1Click}>
+				<button className="btn btn-secondary" onClick={funcBtn1}>
 					{btnTitle1}
 				</button>
 				{isAdmin && (

@@ -12,3 +12,7 @@ export const FETCH_TESTS_SUCCESS = 'FETCH_TESTS_SUCCESS';
 export const REQUEST_ADD_TEST = 'REQUEST_ADD_TEST';
 export const ADD_TEST = 'ADD_TEST';
 export const CHANGE_FILTER = 'CHANGE_FILTER';
+// export const SORT_DESC_TESTS = 'SORT_DESC_TESTS';
+// export const SORT_ASC_TESTS = 'SORT_ASC_TESTS';
+export const SORT_TESTS = 'SORT_TESTS';
+export const ADD_SORT_TESTS = 'ADD_SORT_TESTS';
