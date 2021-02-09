@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 
 const TestManagement = ({ test, onModalShow, onRequestDeleteTest }) => {
 	const [value, setValue] = useState(test?.title || '');
+	const [typeQuestion, setTypeQuestion] = useState('');
 	const history = useHistory();
 
 	const questions = [
@@ -55,8 +56,14 @@ const TestManagement = ({ test, onModalShow, onRequestDeleteTest }) => {
 			</Link>
 			<div>
 				<QuestionList questions={test?.questions || []} />
-				<Dropdown />
-				<FormQuestion questionType={null} question={null} />
+				<Dropdown onSetTypeQuestion={setTypeQuestion} />
+				{typeQuestion && (
+					<FormQuestion
+						onSetTypeQuestion={setTypeQuestion}
+						questionType={typeQuestion || null}
+						question={null}
+					/>
+				)}
 			</div>
 		</div>
 	);
@@ -65,6 +72,7 @@ const TestManagement = ({ test, onModalShow, onRequestDeleteTest }) => {
 TestManagement.propTypes = {
 	test: PropTypes.object || null,
 	onModalShow: PropTypes.func,
+	onRequestDeleteTest: PropTypes.func,
 };
 
 export default TestManagement;

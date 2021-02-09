@@ -1,13 +1,27 @@
 import React, { useState } from 'react';
 import FormAnswer from './FormAnswer/FormAnswer';
+import PropTypes from 'prop-types';
 
-const FormQuestion = ({ questionType = 'single', question = null }) => {
+const FormQuestion = ({
+	onSetTypeQuestion,
+	questionType = 'single',
+	question = null,
+}) => {
 	const [value, setValue] = useState(question?.title || '');
-	const answers = [
-		{ text: 'Text1', is_right: false, id: 1 },
-		{ text: 'Text2', is_right: true, id: 2 },
-		{ text: 'Text3', is_right: false, id: 3 },
-	];
+	const [newAnswers, setNewAnswers] = useState(question?.answers || []);
+
+	// const answers = [
+	// 	{ text: 'Text1', is_right: false, id: 1 },
+	// 	{ text: 'Text2', is_right: false, id: 2 },
+	// 	{ text: 'Text3', is_right: false, id: 3 },
+	// ];
+
+	const handleAnswerCreate = () => {
+		const answer = { text: '', is_right: false, id: newAnswers.length };
+		setNewAnswers((state) => [...state, answer]);
+	};
+
+	const handleCanselClick = () => onSetTypeQuestion('');
 
 	const handleInputChange = (evt) => setValue(evt.target.value);
 
@@ -25,21 +39,40 @@ const FormQuestion = ({ questionType = 'single', question = null }) => {
 			</div>
 			<h5>Answers:</h5>
 			<ol className="pl-3">
-				{answers.map((it) => (
+				{newAnswers.map((it) => (
 					<li className="p-1" key={it.id}>
 						<FormAnswer answer={it} questionType={questionType} />
 					</li>
 				))}
 			</ol>
-			<button className="btn btn-primary float-right" title="Add answer">
+			<button
+				className="btn btn-primary float-right"
+				type="button"
+				title="Add answer"
+				onClick={handleAnswerCreate}
+			>
 				<i className="bi bi-plus-circle" />
 			</button>
 			<div className="btn-group">
-				<button className="btn btn-secondary">Cansel</button>
-				<button className="btn btn-primary">Save</button>
+				<button
+					className="btn btn-secondary"
+					type="button"
+					onClick={handleCanselClick}
+				>
+					Cansel
+				</button>
+				<button className="btn btn-primary" type="button">
+					Save
+				</button>
 			</div>
 		</form>
 	);
+};
+
+FormQuestion.propTypes = {
+	question: PropTypes.object || null,
+	questionType: PropTypes.string,
+	onSetTypeQuestion: PropTypes.func,
 };
 
 export default FormQuestion;

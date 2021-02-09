@@ -10,7 +10,6 @@ const FormAnswer = ({ answer, questionType }) => {
 
 	return (
 		<div className="input-group-prepend shadow-sm">
-			{/* <span className="align-self-center mr-2">1</span> */}
 			<input
 				type="text"
 				className="form-control"

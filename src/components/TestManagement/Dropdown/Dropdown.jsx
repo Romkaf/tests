@@ -1,9 +1,14 @@
 import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 import styles from './Dropdown.module.scss';
 
-const Dropdown = () => {
+const Dropdown = ({ onSetTypeQuestion }) => {
 	const { dropdown, show } = styles;
 	const dropElem = useRef();
+
+	const handleTypeBtnClick = (evt) => {
+		onSetTypeQuestion(evt.target.textContent);
+	};
 
 	const handleDropBtnClick = (evt) => {
 		dropElem.current.classList.toggle(`${show}`);
@@ -21,16 +26,31 @@ const Dropdown = () => {
 				ref={dropElem}
 				onClick={handleDropBtnClick}
 			>
-				<button className="typeSelect btn btn-block btn-light">single</button>
-				<button className="typeSelect btn btn-block btn-light mt-0">
+				<button
+					className="typeSelect btn btn-block btn-light"
+					onClick={handleTypeBtnClick}
+				>
+					single
+				</button>
+				<button
+					className="typeSelect btn btn-block btn-light mt-0"
+					onClick={handleTypeBtnClick}
+				>
 					multiplay
 				</button>
-				<button className="typeSelect btn btn-block btn-light mt-0">
+				<button
+					className="typeSelect btn btn-block btn-light mt-0"
+					onClick={handleTypeBtnClick}
+				>
 					number
 				</button>
 			</div>
 		</div>
 	);
+};
+
+Dropdown.propTypes = {
+	onSetTypeQuestion: PropTypes.func,
 };
 
 export default Dropdown;
