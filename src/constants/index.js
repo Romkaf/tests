@@ -13,8 +13,11 @@ export const INPUTS_ID = {
 	admin: 'admin',
 };
 export const ERROR_TEXTS = {
-	MIN_NAME_LENGTH: 'Не менее двух символов',
-	MIN_PASSWORD_LENGTH: 'Не менее шести символов',
-	REQUIRED: 'Поле необходимо для заполнения',
-	NOT_MATCH: 'Пароль не совпадает',
+	MIN_NAME_LENGTH: 'Requires at least two characters',
+	MIN_PASSWORD_LENGTH: 'Requires at least six characters',
+	NOT_MATCH: 'Password does not match',
+	REQUIRED: 'Required to fill',
+	INDICATE_ANSWER: 'Indicate the correct answer',
+	ONE_ANSWER: 'Requires only one answer',
+	TWO_ANSWER: 'Requires at least two answers',
 };
