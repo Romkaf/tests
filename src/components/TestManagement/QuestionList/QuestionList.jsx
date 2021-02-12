@@ -7,7 +7,7 @@ const QuestionList = ({ questions }) => {
 			<h5>Questions:</h5>
 			<ol className="container pr-0">
 				{questions.map((it) => (
-					<li className="alert alert-light" key={it.title}>
+					<li className="alert alert-light" key={it.id}>
 						<QuestionItem title={it.title} />
 					</li>
 				))}

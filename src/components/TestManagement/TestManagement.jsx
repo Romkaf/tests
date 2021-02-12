@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import QuestionList from './QuestionList';
 import Dropdown from './Dropdown';
-import FormQuestion from './FormQuestion/FormQuestion';
+import FormQuestion from './FormQuestion';
 import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -56,11 +56,14 @@ const TestManagement = ({ test, onModalShow, onRequestDeleteTest }) => {
 			</Link>
 			<div>
 				<QuestionList questions={test?.questions || []} />
-				<Dropdown onSetTypeQuestion={setTypeQuestion} />
+				<Dropdown
+					onSetTypeQuestion={setTypeQuestion}
+					typeQuestion={typeQuestion}
+				/>
 				{typeQuestion && (
 					<FormQuestion
 						onSetTypeQuestion={setTypeQuestion}
-						questionType={typeQuestion || null}
+						typeQuestion={typeQuestion || null}
 						question={null}
 					/>
 				)}

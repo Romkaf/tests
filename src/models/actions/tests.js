@@ -7,6 +7,9 @@ import {
 	DELETE_TEST,
 	SORT_TESTS,
 	ADD_SORT_TESTS,
+	REQUEST_CREATE_QUESTION,
+	REQUEST_CREATE_ANSWER,
+	ADD_QUESTION,
 } from './actionTypes';
 
 export const fetchTests = () => ({ type: FETCH_TESTS });
@@ -36,3 +39,18 @@ export const requestDeleteTest = (id) => ({
 });
 
 export const deleteTest = (id) => ({ type: DELETE_TEST, payload: id });
+
+export const requestCreateQuestion = (testId, data) => ({
+	type: REQUEST_CREATE_QUESTION,
+	payload: { testId, data },
+});
+
+export const requestCreateAnswer = (data) => ({
+	type: REQUEST_CREATE_ANSWER,
+	payload: data,
+});
+
+export const addQuestion = (id, data) => ({
+	type: ADD_QUESTION,
+	payload: { id, data },
+});

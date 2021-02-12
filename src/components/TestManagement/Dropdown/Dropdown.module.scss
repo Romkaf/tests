@@ -1,6 +1,6 @@
 .dropdown {
 	display: none;
-	position: absolute;
+	position: relative;
 	background-color: #f1f1f1;
 	min-width: 160px;
 	overflow: auto;
@@ -16,4 +16,10 @@
 
 .show {
 	display: block;
+}
+
+.disabled {
+	background-color: rgba(0, 0, 0, 0.1) !important;
+	border-color: transparent !important;
+	pointer-events: none;
 }
