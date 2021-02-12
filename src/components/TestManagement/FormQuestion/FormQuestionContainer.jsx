@@ -3,7 +3,6 @@ import FormQuestion from './FormQuestion';
 import { connect } from 'react-redux';
 import { requestCreateQuestion } from '@models/actions';
 import { useLocation } from 'react-router-dom';
-import { requestCreateAnswer } from '../../../models/actions/tests';
 
 const FormQuestionContainer = (props) => {
 	const location = useLocation();

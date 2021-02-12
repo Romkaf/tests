@@ -27,7 +27,6 @@ const FormAnswer = ({ answer, typeQuestion, error = null }) => {
 					aria-label="Field for an answer"
 					onChange={handleInputChange}
 					required
-					autoFocus
 				/>
 				<div
 					className="input-group-text"

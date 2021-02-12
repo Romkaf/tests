@@ -7,8 +7,8 @@ import PropTypes from 'prop-types';
 
 const FormQuestion = ({
 	onSetTypeQuestion,
-	typeQuestion = 'single',
-	question = null,
+	typeQuestion,
+	question,
 	onRequestCreateQuestion,
 }) => {
 	const [errors, setErrors] = useState(null);
