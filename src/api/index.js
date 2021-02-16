@@ -16,3 +16,7 @@ export const fetchCreateQuestion = (id, data) =>
 	postRequest(`/tests/${id}/questions`, data);
 export const fetchCreateAnswer = (id, data) =>
 	postRequest(`/questions/${id}/answers`, data);
+export const fetchUpdateQuestion = (id, data) =>
+	patchRequest(`/questions/${id}`, data);
+export const fetchUpdateAnswer = (id, data) =>
+	patchRequest(`/answers/${id}`, data);

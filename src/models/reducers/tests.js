@@ -4,6 +4,7 @@ import {
 	ADD_SORT_TESTS,
 	DELETE_TEST,
 	ADD_QUESTION,
+	UPDATE_QUESTION,
 } from '@models/actions/actionTypes';
 
 export default (state = [], action) => {
@@ -21,7 +22,7 @@ export default (state = [], action) => {
 			return state.filter((it) => action.payload !== it.id);
 
 		case ADD_QUESTION:
-			const updatedTests = state.map((it) =>
+			return state.map((it) =>
 				it.id == action.payload.id
 					? {
 							...it,
@@ -30,7 +31,17 @@ export default (state = [], action) => {
 					: it,
 			);
 
-			return [...updatedTests];
+		case UPDATE_QUESTION:
+			return state.map((it) =>
+				it.id == action.payload.id
+					? {
+							...it,
+							questions: it.questions.map((it) =>
+								it.id == action.payload.data.id ? action.payload.data : it,
+							),
+					  }
+					: it,
+			);
 
 		default:
 			return state;

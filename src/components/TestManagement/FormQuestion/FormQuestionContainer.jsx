@@ -1,7 +1,7 @@
 import React from 'react';
 import FormQuestion from './FormQuestion';
 import { connect } from 'react-redux';
-import { requestCreateQuestion } from '@models/actions';
+import { requestCreateQuestion, requestUpdateQuestion } from '@models/actions';
 import { useLocation } from 'react-router-dom';
 
 const FormQuestionContainer = (props) => {
@@ -11,14 +11,20 @@ const FormQuestionContainer = (props) => {
 	const onRequestCreateQuestion = (data) =>
 		props.requestCreateQuestion(testId, data);
 
+	const onRequestUpdateQuestion = (data) =>
+		props.requestUpdateQuestion(testId, data);
+
 	return (
 		<FormQuestion
 			onSetTypeQuestion={props.onSetTypeQuestion}
 			typeQuestion={props.typeQuestion}
 			question={props.question}
 			onRequestCreateQuestion={onRequestCreateQuestion}
+			onRequestUpdateQuestion={onRequestUpdateQuestion}
 		/>
 	);
 };
 
-export default connect(null, { requestCreateQuestion })(FormQuestionContainer);
+const actions = { requestCreateQuestion, requestUpdateQuestion };
+
+export default connect(null, actions)(FormQuestionContainer);

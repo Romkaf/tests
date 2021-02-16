@@ -10,13 +10,13 @@ const {
 
 export const validate = (fields) => {
 	const errors = {};
-	if (!fields.question_type) {
+	if (!fields.title) {
 		errors.question = REQUIRED;
 	}
 
 	if (fields.type !== 'number') {
 		if (fields.answers) {
-			if (fields.type === 'single') {
+			if (fields.question_type === 'single') {
 				if (fields.answers.filter((it) => it.is_right === true).length > 1) {
 					errors.answersGeneral = ONE_RIGHT_ANSWER;
 				}
@@ -43,7 +43,7 @@ export const validate = (fields) => {
 		}
 	}
 
-	if (fields.type === 'number') {
+	if (fields.question_type === 'number') {
 		if (fields.answers) {
 			fields.answers.forEach((it) => {
 				if (!it.text) {

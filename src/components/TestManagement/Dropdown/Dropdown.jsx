@@ -51,7 +51,7 @@ const Dropdown = ({ onSetTypeQuestion, typeQuestion }) => {
 					className="typeSelect btn btn-block btn-light mt-0"
 					onClick={handleTypeBtnClick}
 				>
-					multiplay
+					multiple
 				</button>
 				<button
 					className="typeSelect btn btn-block btn-light mt-0"

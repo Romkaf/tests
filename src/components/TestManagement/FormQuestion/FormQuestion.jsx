@@ -10,6 +10,7 @@ const FormQuestion = ({
 	typeQuestion,
 	question,
 	onRequestCreateQuestion,
+	onRequestUpdateQuestion,
 }) => {
 	const [errors, setErrors] = useState(null);
 	const [value, setValue] = useState(question?.title || '');
@@ -19,10 +20,13 @@ const FormQuestion = ({
 		'is-invalid': errors?.question,
 	});
 
-	const getAnswersData = () => {
+	const getFormData = () => {
 		const form = document.forms[QUESTION_FORM];
 		if (!form['input']) {
-			return null;
+			return {
+				title: value,
+				question_type: typeQuestion,
+			};
 		}
 
 		const inputsValues = form['input'].length
@@ -36,30 +40,68 @@ const FormQuestion = ({
 			? Array.from(form['checkbox']).map((it) => it.checked)
 			: [form['checkbox']?.checked];
 
-		return inputsValues.map((it, idx) => ({
+		const answers = inputsValues.map((it, idx) => ({
 			...it,
 			is_right: checkboxValues[idx],
 		}));
+
+		return {
+			title: value,
+			answers,
+			question_type: typeQuestion,
+		};
+	};
+
+	const updateQuestion = (data) => {
+		const { title, answers, question_type } = data;
+		const checkedAnswers = checkAnswers(data.answers, question.answers);
+		const updatingQuestion = {
+			title,
+			question_type,
+			answer: answers.length,
+		};
+		onRequestUpdateQuestion({
+			updatingQuestion,
+			checkedAnswers,
+			quetionId: question.id,
+		});
+	};
+
+	const checkAnswers = (currentAnswers, oldAnswers) => {
+		const patchAnswers = currentAnswers.filter((it) =>
+			oldAnswers.some((el) => el.id === +it.id),
+		);
+
+		const postAnswers = currentAnswers.filter(
+			(it) => !oldAnswers.some((el) => el.id === +it.id),
+		);
+
+		return { patchAnswers, postAnswers };
+	};
+
+	const validateData = (data) => {
+		const errors = validate(data);
+		setErrors(errors);
+		return errors;
 	};
 
 	const handleSaveClick = () => {
-		const data = {
-			title: value,
-			answers: getAnswersData(),
-			question_type: typeQuestion,
-		};
-		const errors = validate(data);
-		setErrors(errors);
+		const data = getFormData();
+		const errors = validateData(data);
 
 		if (Object.keys(errors).length === 0) {
-			onRequestCreateQuestion(data);
+			if (question) {
+				updateQuestion(data);
+			} else {
+				onRequestCreateQuestion(data);
+			}
 			onSetTypeQuestion('');
 		}
 	};
 
 	const handleCanselClick = () => onSetTypeQuestion('');
 
-	const handleAnswerCreate = () => {
+	const handleAnswerAdd = () => {
 		const answer = { text: '', is_right: false, id: newAnswers.length };
 		setNewAnswers((state) => [...state, answer]);
 	};
@@ -79,6 +121,7 @@ const FormQuestion = ({
 				<input
 					type="text"
 					className={classInput}
+					value={value}
 					aria-label="Field for the question"
 					onChange={handleInputChange}
 					autoFocus
@@ -104,7 +147,7 @@ const FormQuestion = ({
 					className="btn btn-primary float-right"
 					type="button"
 					title="Add answer"
-					onClick={handleAnswerCreate}
+					onClick={handleAnswerAdd}
 				>
 					<i className="bi bi-plus-circle" />
 				</button>
@@ -137,6 +180,7 @@ FormQuestion.propTypes = {
 	typeQuestion: PropTypes.string,
 	onSetTypeQuestion: PropTypes.func,
 	onRequestCreateQuestion: PropTypes.func,
+	onRequestUpdateQuestion: PropTypes.func,
 };
 
 export default FormQuestion;
