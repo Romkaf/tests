@@ -14,7 +14,7 @@ export const validate = (fields) => {
 		errors.question = REQUIRED;
 	}
 
-	if (fields.type !== 'number') {
+	if (fields.question_type !== 'number') {
 		if (fields.answers) {
 			if (fields.question_type === 'single') {
 				if (fields.answers.filter((it) => it.is_right === true).length > 1) {

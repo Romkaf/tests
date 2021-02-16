@@ -6,13 +6,19 @@ const QuestionItem = ({
 	onSetTypeQuestion,
 	typeQuestion,
 	onSetQuestion,
+	onRequestDeleteQuestion,
+	onModalShow,
 }) => {
 	const handleBtnEditClick = () => {
 		onSetTypeQuestion(typeQuestion);
 		onSetQuestion();
 	};
 
-	const handleBtnDeleteClick = () => {};
+	const handleBtnDeleteClick = () =>
+		onModalShow(
+			'Вы действительно хотите удалить вопрос?',
+			onRequestDeleteQuestion,
+		);
 
 	return (
 		<div className="d-flex align-items-center">
@@ -38,6 +44,7 @@ QuestionItem.propTypes = {
 	typeQuestion: PropTypes.string,
 	onSetTypeQuestion: PropTypes.func,
 	onSetQuestion: PropTypes.func,
+	onModalShow: PropTypes.func,
 };
 
 export default QuestionItem;

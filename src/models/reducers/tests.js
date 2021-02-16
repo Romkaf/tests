@@ -5,6 +5,7 @@ import {
 	DELETE_TEST,
 	ADD_QUESTION,
 	UPDATE_QUESTION,
+	DELETE_QUESTION,
 } from '@models/actions/actionTypes';
 
 export default (state = [], action) => {
@@ -38,6 +39,18 @@ export default (state = [], action) => {
 							...it,
 							questions: it.questions.map((it) =>
 								it.id == action.payload.data.id ? action.payload.data : it,
+							),
+					  }
+					: it,
+			);
+
+		case DELETE_QUESTION:
+			return state.map((it) =>
+				it.id == action.payload.testId
+					? {
+							...it,
+							questions: it.questions.filter(
+								(it) => it.id != action.payload.questionId,
 							),
 					  }
 					: it,

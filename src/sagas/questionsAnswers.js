@@ -4,11 +4,13 @@ import {
 	fetchCreateAnswer,
 	fetchUpdateQuestion,
 	fetchUpdateAnswer,
+	fetchDeleteQuestion,
 } from '@api';
-import { addQuestion, updateQuestion } from '@models/actions';
+import { addQuestion, updateQuestion, deleteQuestion } from '@models/actions';
 import {
 	REQUEST_CREATE_QUESTION,
 	REQUEST_UPDATE_QUESTION,
+	REQUEST_DELETE_QUESTION,
 } from '@models/actions/actionTypes';
 import { showAndHideError } from './error';
 
@@ -89,9 +91,20 @@ function* workerFetchPatchQuestionAndAnswers({ payload }) {
 	}
 }
 
+function* workerFetchDeleteQuestion({ payload }) {
+	try {
+		const { testId, questionId } = payload;
+		yield fetchDeleteQuestion(questionId);
+		yield put(deleteQuestion(testId, questionId));
+	} catch (error) {
+		yield showAndHideError('Не удалось удалить вопрос', error);
+	}
+}
+
 export default function* () {
 	yield all([
 		takeEvery(REQUEST_CREATE_QUESTION, workerFetchPostQuestionAndAnswers),
 		takeEvery(REQUEST_UPDATE_QUESTION, workerFetchPatchQuestionAndAnswers),
+		takeEvery(REQUEST_DELETE_QUESTION, workerFetchDeleteQuestion),
 	]);
 }

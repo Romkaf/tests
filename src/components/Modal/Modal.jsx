@@ -3,7 +3,12 @@ import { keyCodeEsc } from '@constants';
 import styles from './Modal.module.scss';
 
 const Modale = ({ text, onModalConfirm, onModalHide }) => {
-	useEffect(() => modal.current.focus());
+	useEffect(() => {
+		modal.current.focus();
+		document.body.classList.add(styles.lock);
+		return () => document.body.classList.remove(styles.lock);
+	});
+
 	const modal = useRef();
 
 	const handleModalConfirm = () => {
