@@ -3,6 +3,7 @@ import FormQuestion from './FormQuestion';
 import { connect } from 'react-redux';
 import { requestCreateQuestion, requestUpdateQuestion } from '@models/actions';
 import { useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const FormQuestionContainer = (props) => {
 	const location = useLocation();
@@ -23,6 +24,14 @@ const FormQuestionContainer = (props) => {
 			onRequestUpdateQuestion={onRequestUpdateQuestion}
 		/>
 	);
+};
+
+FormQuestionContainer.propTypes = {
+	question: PropTypes.object || null,
+	typeQuestion: PropTypes.string,
+	onSetTypeQuestion: PropTypes.func,
+	requestCreateQuestion: PropTypes.func,
+	requestUpdateQuestion: PropTypes.func,
 };
 
 const actions = { requestCreateQuestion, requestUpdateQuestion };

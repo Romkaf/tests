@@ -4,7 +4,10 @@ import styles from './Dropdown.module.scss';
 
 const Dropdown = ({ onSetTypeQuestion, typeQuestion }) => {
 	useEffect(
-		() => !typeQuestion && dropBtn.current.classList.remove(`${disabled}`),
+		() =>
+			!typeQuestion
+				? dropBtn.current.classList.remove(`${disabled}`)
+				: dropBtn.current.classList.add(`${disabled}`),
 		[typeQuestion],
 	);
 
@@ -12,12 +15,7 @@ const Dropdown = ({ onSetTypeQuestion, typeQuestion }) => {
 	const dropElem = useRef();
 	const dropBtn = useRef();
 
-	const setDisabled = () => dropBtn.current.classList.add(`${disabled}`);
-
-	const handleTypeBtnClick = (evt) => {
-		onSetTypeQuestion(evt.target.textContent);
-		setDisabled();
-	};
+	const handleTypeBtnClick = (evt) => onSetTypeQuestion(evt.target.textContent);
 
 	const handleDropBtnClick = (evt) => {
 		dropElem.current.classList.toggle(`${show}`);
@@ -66,6 +64,7 @@ const Dropdown = ({ onSetTypeQuestion, typeQuestion }) => {
 
 Dropdown.propTypes = {
 	onSetTypeQuestion: PropTypes.func,
+	typeQuestion: PropTypes.string,
 };
 
 export default Dropdown;
