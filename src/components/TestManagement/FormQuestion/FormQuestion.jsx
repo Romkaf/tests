@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import FormAnswer from './FormAnswer/FormAnswer';
 import classnames from 'classnames';
 import { validate } from './validate';
@@ -14,6 +14,7 @@ const FormQuestion = ({
 	onRequestCreateQuestion,
 	onRequestUpdateQuestion,
 	onRequestMoveAnswer,
+	onModalShow,
 }) => {
 	const [errors, setErrors] = useState(null);
 	const [value, setValue] = useState(question?.title || '');
@@ -81,7 +82,11 @@ const FormQuestion = ({
 			(it) => !oldAnswers.some((el) => el.id === +it.id),
 		);
 
-		return { patchAnswers, postAnswers };
+		const deleteAnswers = oldAnswers.filter((it) =>
+			currentAnswers.every((el) => el.id != it.id),
+		);
+
+		return { patchAnswers, postAnswers, deleteAnswers };
 	};
 
 	const validateData = (data) => {
@@ -105,6 +110,9 @@ const FormQuestion = ({
 	};
 
 	const handleCanselClick = () => onSetTypeQuestion('');
+	const handleAnswerDelete = (id) => {
+		setNewAnswers((state) => state.filter((it) => it.id != id));
+	};
 
 	const handleAnswerAdd = () => {
 		const answer = { text: '', is_right: false, id: newAnswers.length };
@@ -181,6 +189,8 @@ const FormQuestion = ({
 												answer={it}
 												typeQuestion={typeQuestion}
 												error={errors?.answersInputs}
+												onModalShow={onModalShow}
+												onAnswerDelete={handleAnswerDelete}
 											/>
 										</li>
 									)}
@@ -231,6 +241,7 @@ FormQuestion.propTypes = {
 	onRequestCreateQuestion: PropTypes.func,
 	onRequestUpdateQuestion: PropTypes.func,
 	onRequestMoveAnswer: PropTypes.func,
+	onModalShow: PropTypes.func,
 };
 
 export default FormQuestion;

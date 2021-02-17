@@ -9,8 +9,10 @@ const QuestionListContainer = (props) => {
 	const location = useLocation();
 	const testId = location.pathname.replace(/\/management\//, '');
 
-	const onRequestDeleteQuestion = (questionId) =>
+	const onRequestDeleteQuestion = (questionId) => {
 		props.requestDeleteQuestion(testId, questionId);
+		props.onSetTypeQuestion('');
+	};
 
 	return (
 		<QuestionList

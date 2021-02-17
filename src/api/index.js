@@ -23,3 +23,4 @@ export const fetchUpdateAnswer = (id, data) =>
 export const fetchMoveAnswer = (id, position) =>
 	patchRequest(`/answers/${id}/insert_at/${position}`);
 export const fetchDeleteQuestion = (id) => deleteRequest(`/questions/${id}`);
+export const fetchDeleteAnswer = (id) => deleteRequest(`/answers/${id}`);

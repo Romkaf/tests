@@ -3,7 +3,13 @@ import styles from './FormAnswer.module.scss';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
-const FormAnswer = ({ answer, typeQuestion, error = null }) => {
+const FormAnswer = ({
+	answer,
+	typeQuestion,
+	error = null,
+	onModalShow,
+	onAnswerDelete,
+}) => {
 	const keyId =
 		error && Object.keys(error).find((it) => it === String(answer.id));
 
@@ -14,8 +20,11 @@ const FormAnswer = ({ answer, typeQuestion, error = null }) => {
 		'is-invalid': keyId === String(answer.id),
 	});
 
+	const wrapperAnswerDelete = () => onAnswerDelete(answer.id);
 	const handleInputChange = (evt) => setValue(evt.target.value);
 	const handleCheckboxChange = () => setIsRight((state) => !state);
+	const handleDeleteClick = () =>
+		onModalShow('Вы действительно хотите удалить ответ?', wrapperAnswerDelete);
 
 	return (
 		<>
@@ -43,7 +52,12 @@ const FormAnswer = ({ answer, typeQuestion, error = null }) => {
 					/>
 				</div>
 				{typeQuestion !== 'number' && (
-					<button title="Delete answer" className={styles.btn}>
+					<button
+						title="Delete answer"
+						type="button"
+						className={styles.btn}
+						onClick={handleDeleteClick}
+					>
 						&#65794;
 					</button>
 				)}
@@ -59,6 +73,8 @@ FormAnswer.propTypes = {
 	answer: PropTypes.object,
 	error: PropTypes.object || null,
 	typeQuestion: PropTypes.string,
+	onAnswerDelete: PropTypes.func,
+	onModalShow: PropTypes.func,
 };
 
 export default FormAnswer;

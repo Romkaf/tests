@@ -6,6 +6,7 @@ import {
 	fetchUpdateAnswer,
 	fetchDeleteQuestion,
 	fetchMoveAnswer,
+	fetchDeleteAnswer,
 } from '@api';
 import { addQuestion, updateQuestion, deleteQuestion } from '@models/actions';
 import {
@@ -63,13 +64,16 @@ function* workerFetchPatchQuestionAndAnswers({ payload }) {
 			data: { updatingQuestion, checkedAnswers, quetionId },
 		} = payload;
 
-		const { patchAnswers, postAnswers } = checkedAnswers;
+		const { patchAnswers, postAnswers, deleteAnswers } = checkedAnswers;
+
 		const { data: receivedQuestion } = yield fetchUpdateQuestion(
 			quetionId,
 			updatingQuestion,
 		);
 
-		let updatedAnswers, createdAnswers;
+		let updatedAnswers = [],
+			createdAnswers = [];
+
 		if (patchAnswers.length) {
 			updatedAnswers = yield getFetchedAnswers(patchAnswers, fetchUpdateAnswer);
 		}
@@ -80,6 +84,10 @@ function* workerFetchPatchQuestionAndAnswers({ payload }) {
 				fetchCreateAnswer,
 				quetionId,
 			);
+		}
+
+		if (deleteAnswers.length) {
+			yield getFetchedAnswers(deleteAnswers, fetchDeleteAnswer);
 		}
 
 		yield put(

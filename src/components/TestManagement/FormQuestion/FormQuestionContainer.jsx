@@ -5,6 +5,7 @@ import {
 	requestCreateQuestion,
 	requestUpdateQuestion,
 	requestMoveAnswer,
+	showModal,
 } from '@models/actions';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -27,6 +28,7 @@ const FormQuestionContainer = (props) => {
 			onRequestCreateQuestion={onRequestCreateQuestion}
 			onRequestUpdateQuestion={onRequestUpdateQuestion}
 			onRequestMoveAnswer={props.requestMoveAnswer}
+			onModalShow={props.showModal}
 		/>
 	);
 };
@@ -38,12 +40,14 @@ FormQuestionContainer.propTypes = {
 	requestCreateQuestion: PropTypes.func,
 	requestUpdateQuestion: PropTypes.func,
 	requestMoveAnswer: PropTypes.func,
+	showModal: PropTypes.func,
 };
 
 const actions = {
 	requestCreateQuestion,
 	requestUpdateQuestion,
 	requestMoveAnswer,
+	showModal,
 };
 
 export default connect(null, actions)(FormQuestionContainer);
