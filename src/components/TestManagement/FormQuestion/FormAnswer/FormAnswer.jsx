@@ -6,8 +6,10 @@ import PropTypes from 'prop-types';
 const FormAnswer = ({ answer, typeQuestion, error = null }) => {
 	const keyId =
 		error && Object.keys(error).find((it) => it === String(answer.id));
+
 	const [value, setValue] = useState(answer?.text || '');
 	const [isRight, setIsRight] = useState(answer.is_right || false);
+
 	const classInput = classnames('form-control', {
 		'is-invalid': keyId === String(answer.id),
 	});

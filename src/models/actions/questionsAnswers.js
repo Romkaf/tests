@@ -5,6 +5,7 @@ import {
 	UPDATE_QUESTION,
 	REQUEST_DELETE_QUESTION,
 	DELETE_QUESTION,
+	REQUEST_MOVE_ANSWER,
 } from './actionTypes';
 
 export const requestCreateQuestion = (testId, data) => ({
@@ -35,4 +36,9 @@ export const requestDeleteQuestion = (testId, questionId) => ({
 export const deleteQuestion = (testId, questionId) => ({
 	type: DELETE_QUESTION,
 	payload: { testId, questionId },
+});
+
+export const requestMoveAnswer = (id, position) => ({
+	type: REQUEST_MOVE_ANSWER,
+	payload: { id, position },
 });

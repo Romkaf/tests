@@ -3,6 +3,8 @@ import FormAnswer from './FormAnswer/FormAnswer';
 import classnames from 'classnames';
 import { validate } from './validate';
 import { QUESTION_FORM } from '@constants';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import styles from './FormQuestion.module.scss';
 import PropTypes from 'prop-types';
 
 const FormQuestion = ({
@@ -11,10 +13,13 @@ const FormQuestion = ({
 	question,
 	onRequestCreateQuestion,
 	onRequestUpdateQuestion,
+	onRequestMoveAnswer,
 }) => {
 	const [errors, setErrors] = useState(null);
 	const [value, setValue] = useState(question?.title || '');
 	const [newAnswers, setNewAnswers] = useState(question?.answers || []);
+
+	const { answerList, selected } = styles;
 
 	const classInput = classnames('form-control', 'rounded', 'shadow-sm', {
 		'is-invalid': errors?.question,
@@ -54,7 +59,7 @@ const FormQuestion = ({
 
 	const updateQuestion = (data) => {
 		const { title, answers, question_type } = data;
-		const checkedAnswers = checkAnswers(data.answers, question.answers);
+		const checkedAnswers = checkAnswers(answers, question.answers);
 		const updatingQuestion = {
 			title,
 			question_type,
@@ -108,6 +113,30 @@ const FormQuestion = ({
 
 	const handleInputChange = (evt) => setValue(evt.target.value);
 
+	const reorder = (list, startIndex, endIndex) => {
+		const result = Array.from(list);
+		const [removed] = result.splice(startIndex, 1);
+		result.splice(endIndex, 0, removed);
+
+		return result;
+	};
+
+	const handleDragEnd = (result) => {
+		if (!result.destination) {
+			return;
+		}
+
+		const items = reorder(
+			newAnswers,
+			result.source.index,
+			result.destination.index,
+		);
+
+		onRequestMoveAnswer(result.draggableId, result.destination.index);
+
+		setNewAnswers(items);
+	};
+
 	return (
 		<form
 			className="bg-white container pt-2 pb-3 rounded-lg shadow"
@@ -131,17 +160,37 @@ const FormQuestion = ({
 				)}
 			</div>
 			<h5>Answers:</h5>
-			<ol className="pl-3">
-				{newAnswers.map((it) => (
-					<li className="p-1" key={it.id}>
-						<FormAnswer
-							answer={it}
-							typeQuestion={typeQuestion}
-							error={errors?.answersInputs}
-						/>
-					</li>
-				))}
-			</ol>
+			<DragDropContext onDragEnd={handleDragEnd}>
+				<Droppable droppableId="droppable">
+					{(provided) => (
+						<ul
+							className={answerList}
+							{...provided.droppableProps}
+							ref={provided.innerRef}
+						>
+							{newAnswers.map((it, idx) => (
+								<Draggable key={it.id} draggableId={String(it.id)} index={idx}>
+									{(provided, snapshot) => (
+										<li
+											className={`p-1 ${snapshot.isDragging && selected}`}
+											ref={provided.innerRef}
+											{...provided.draggableProps}
+											{...provided.dragHandleProps}
+										>
+											<FormAnswer
+												answer={it}
+												typeQuestion={typeQuestion}
+												error={errors?.answersInputs}
+											/>
+										</li>
+									)}
+								</Draggable>
+							))}
+							{provided.placeholder}
+						</ul>
+					)}
+				</Droppable>
+			</DragDropContext>
 			{!(typeQuestion === 'number' && newAnswers.length >= 1) && (
 				<button
 					className="btn btn-primary float-right"
@@ -181,6 +230,7 @@ FormQuestion.propTypes = {
 	onSetTypeQuestion: PropTypes.func,
 	onRequestCreateQuestion: PropTypes.func,
 	onRequestUpdateQuestion: PropTypes.func,
+	onRequestMoveAnswer: PropTypes.func,
 };
 
 export default FormQuestion;

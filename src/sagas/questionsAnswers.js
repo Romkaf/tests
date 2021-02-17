@@ -5,12 +5,14 @@ import {
 	fetchUpdateQuestion,
 	fetchUpdateAnswer,
 	fetchDeleteQuestion,
+	fetchMoveAnswer,
 } from '@api';
 import { addQuestion, updateQuestion, deleteQuestion } from '@models/actions';
 import {
 	REQUEST_CREATE_QUESTION,
 	REQUEST_UPDATE_QUESTION,
 	REQUEST_DELETE_QUESTION,
+	REQUEST_MOVE_ANSWER,
 } from '@models/actions/actionTypes';
 import { showAndHideError } from './error';
 
@@ -101,10 +103,23 @@ function* workerFetchDeleteQuestion({ payload }) {
 	}
 }
 
+function* workerFetchMoveAnswer({ payload }) {
+	try {
+		const { id, position } = payload;
+		yield fetchMoveAnswer(id, position);
+	} catch (error) {
+		yield showAndHideError(
+			'Не удалось изменить позицию ответа на сервере',
+			error,
+		);
+	}
+}
+
 export default function* () {
 	yield all([
 		takeEvery(REQUEST_CREATE_QUESTION, workerFetchPostQuestionAndAnswers),
 		takeEvery(REQUEST_UPDATE_QUESTION, workerFetchPatchQuestionAndAnswers),
 		takeEvery(REQUEST_DELETE_QUESTION, workerFetchDeleteQuestion),
+		takeEvery(REQUEST_MOVE_ANSWER, workerFetchMoveAnswer),
 	]);
 }
