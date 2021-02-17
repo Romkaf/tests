@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import { validate } from './validate';
 import { QUESTION_FORM } from '@constants';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { usePrevious } from '@utils/customHooks';
 import styles from './FormQuestion.module.scss';
 import PropTypes from 'prop-types';
 
@@ -16,9 +17,23 @@ const FormQuestion = ({
 	onRequestMoveAnswer,
 	onModalShow,
 }) => {
+	useEffect(() => shouldUpdate());
+
 	const [errors, setErrors] = useState(null);
 	const [value, setValue] = useState(question?.title || '');
 	const [newAnswers, setNewAnswers] = useState(question?.answers || []);
+	const prevQuestion = usePrevious(question);
+
+	const shouldUpdate = () => {
+		if (
+			question !== prevQuestion &&
+			question &&
+			newAnswers !== question?.answers
+		) {
+			setNewAnswers(question?.answers);
+			setValue(question?.title);
+		}
+	};
 
 	const { answerList, selected } = styles;
 
