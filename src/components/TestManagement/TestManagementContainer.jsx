@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TestManagement from './TestManagement';
-import { requestDeleteTest, showModal } from '@models/actions';
+import { requestDeleteTest, showModal, requestEditTest } from '@models/actions';
 import PropTypes from 'prop-types';
 
 const TestManagementContainer = ({
@@ -9,6 +9,7 @@ const TestManagementContainer = ({
 	id,
 	showModal,
 	requestDeleteTest,
+	requestEditTest,
 }) => {
 	const test = tests.find((it) => it.id === +id) || null;
 
@@ -18,6 +19,7 @@ const TestManagementContainer = ({
 				test={test}
 				onModalShow={showModal}
 				onRequestDeleteTest={requestDeleteTest}
+				onRequestEditTest={requestEditTest}
 			/>
 		</div>
 	);
@@ -28,9 +30,10 @@ TestManagementContainer.propTypes = {
 	id: PropTypes.string,
 	showModal: PropTypes.func,
 	requestDeleteTest: PropTypes.func,
+	requestEditTest: PropTypes.func,
 };
 
-const actions = { showModal, requestDeleteTest };
+const actions = { showModal, requestDeleteTest, requestEditTest };
 
 const mapStateToProps = ({ tests }) => ({ tests });
 

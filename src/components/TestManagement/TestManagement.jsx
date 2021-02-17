@@ -5,7 +5,12 @@ import FormQuestion from './FormQuestion';
 import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const TestManagement = ({ test, onModalShow, onRequestDeleteTest }) => {
+const TestManagement = ({
+	test,
+	onModalShow,
+	onRequestDeleteTest,
+	onRequestEditTest,
+}) => {
 	const [value, setValue] = useState(test?.title || '');
 	const [question, setQuestion] = useState(null);
 	const [typeQuestion, setTypeQuestion] = useState('');
@@ -19,16 +24,19 @@ const TestManagement = ({ test, onModalShow, onRequestDeleteTest }) => {
 		setValue(evt.target.value);
 	};
 
-	const handleBtnSave = () => {};
-
-	const handleDeleteSuccess = () => {
-		onRequestDeleteTest(test.id);
-		history.push('/tests');
+	const handleTestDelete = () => {
+		onRequestDeleteTest(test.id, history);
 	};
 
-	const handleBtnDelete = () => {
-		onModalShow('Вы действительно хотите удалить тест?', handleDeleteSuccess);
+	const handleTestSave = () => {
+		onRequestEditTest(test.id, value, history);
 	};
+
+	const handleBtnSaveClick = () =>
+		onModalShow('Сохранить изменения?', handleTestSave);
+
+	const handleBtnDeleteClick = () =>
+		onModalShow('Вы действительно хотите удалить тест?', handleTestDelete);
 
 	return (
 		<div>
@@ -42,11 +50,11 @@ const TestManagement = ({ test, onModalShow, onRequestDeleteTest }) => {
 				/>
 			</h4>
 			<div className="btn-group mb-3">
-				<button className="btn btn-secondary" onClick={handleBtnDelete}>
+				<button className="btn btn-secondary" onClick={handleBtnDeleteClick}>
 					Delete
 				</button>
 
-				<button className="btn btn-primary" onClick={handleBtnSave}>
+				<button className="btn btn-primary" onClick={handleBtnSaveClick}>
 					Save
 				</button>
 			</div>
@@ -79,6 +87,7 @@ TestManagement.propTypes = {
 	test: PropTypes.object || null,
 	onModalShow: PropTypes.func,
 	onRequestDeleteTest: PropTypes.func,
+	onRequestEditTest: PropTypes.func,
 };
 
 export default TestManagement;
