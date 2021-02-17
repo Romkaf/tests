@@ -1,42 +1,262 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import FormAnswer from './FormAnswer/FormAnswer';
+import classnames from 'classnames';
+import { validate } from './validate';
+import { QUESTION_FORM } from '@constants';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { usePrevious } from '@utils/customHooks';
+import styles from './FormQuestion.module.scss';
+import PropTypes from 'prop-types';
 
-const FormQuestion = ({ questionType = 'single', question = null }) => {
+const FormQuestion = ({
+	onSetTypeQuestion,
+	typeQuestion,
+	question,
+	onRequestCreateQuestion,
+	onRequestUpdateQuestion,
+	onRequestMoveAnswer,
+	onModalShow,
+}) => {
+	useEffect(() => shouldUpdate());
+
+	const [errors, setErrors] = useState(null);
 	const [value, setValue] = useState(question?.title || '');
-	const answers = [
-		{ text: 'Text1', is_right: false, id: 1 },
-		{ text: 'Text2', is_right: true, id: 2 },
-		{ text: 'Text3', is_right: false, id: 3 },
-	];
+	const [newAnswers, setNewAnswers] = useState(question?.answers || []);
+	const prevQuestion = usePrevious(question);
+
+	const shouldUpdate = () => {
+		if (
+			question !== prevQuestion &&
+			question &&
+			newAnswers !== question?.answers
+		) {
+			setNewAnswers(question?.answers);
+			setValue(question?.title);
+		}
+	};
+
+	const { answerList, selected } = styles;
+
+	const classInput = classnames('form-control', 'rounded', 'shadow-sm', {
+		'is-invalid': errors?.question,
+	});
+
+	const getFormData = () => {
+		const form = document.forms[QUESTION_FORM];
+		if (!form['input']) {
+			return {
+				title: value,
+				question_type: typeQuestion,
+			};
+		}
+
+		const inputsValues = form['input'].length
+			? Array.from(form['input']).map((it) => ({
+					id: it.dataset.id,
+					text: it.value,
+			  }))
+			: [{ id: form['input'].dataset.id, text: form['input'].value }];
+
+		const checkboxValues = form['checkbox']?.length
+			? Array.from(form['checkbox']).map((it) => it.checked)
+			: [form['checkbox']?.checked];
+
+		const answers = inputsValues.map((it, idx) => ({
+			...it,
+			is_right: checkboxValues[idx],
+		}));
+
+		return {
+			title: value,
+			answers,
+			question_type: typeQuestion,
+		};
+	};
+
+	const updateQuestion = (data) => {
+		const { title, answers, question_type } = data;
+		const checkedAnswers = checkAnswers(answers, question.answers);
+		const updatingQuestion = {
+			title,
+			question_type,
+			answer: answers.length,
+		};
+		onRequestUpdateQuestion({
+			updatingQuestion,
+			checkedAnswers,
+			quetionId: question.id,
+		});
+	};
+
+	const checkAnswers = (currentAnswers, oldAnswers) => {
+		const patchAnswers = currentAnswers.filter((it) =>
+			oldAnswers.some((el) => el.id === +it.id),
+		);
+
+		const postAnswers = currentAnswers.filter(
+			(it) => !oldAnswers.some((el) => el.id === +it.id),
+		);
+
+		const deleteAnswers = oldAnswers.filter((it) =>
+			currentAnswers.every((el) => el.id != it.id),
+		);
+
+		return { patchAnswers, postAnswers, deleteAnswers };
+	};
+
+	const validateData = (data) => {
+		const errors = validate(data);
+		setErrors(errors);
+		return errors;
+	};
+
+	const handleSaveClick = () => {
+		const data = getFormData();
+		const errors = validateData(data);
+
+		if (Object.keys(errors).length === 0) {
+			if (question) {
+				updateQuestion(data);
+			} else {
+				onRequestCreateQuestion(data);
+			}
+			onSetTypeQuestion('');
+		}
+	};
+
+	const handleCanselClick = () => onSetTypeQuestion('');
+	const handleAnswerDelete = (id) => {
+		setNewAnswers((state) => state.filter((it) => it.id != id));
+	};
+
+	const handleAnswerAdd = () => {
+		const answer = { text: '', is_right: false, id: newAnswers.length };
+		setNewAnswers((state) => [...state, answer]);
+	};
 
 	const handleInputChange = (evt) => setValue(evt.target.value);
 
+	const reorder = (list, startIndex, endIndex) => {
+		const result = Array.from(list);
+		const [removed] = result.splice(startIndex, 1);
+		result.splice(endIndex, 0, removed);
+
+		return result;
+	};
+
+	const handleDragEnd = (result) => {
+		if (!result.destination) {
+			return;
+		}
+
+		const items = reorder(
+			newAnswers,
+			result.source.index,
+			result.destination.index,
+		);
+
+		onRequestMoveAnswer(result.draggableId, result.destination.index);
+
+		setNewAnswers(items);
+	};
+
 	return (
-		<form className="bg-white container pt-2 pb-3 rounded-lg shadow">
+		<form
+			className="bg-white container pt-2 pb-3 rounded-lg shadow"
+			name={QUESTION_FORM}
+		>
 			<div className="form-group">
-				<h5>
+				<h5 className="d-inline-block">
 					<label>Question:</label>
 				</h5>
+				<span className="float-right">Type:{typeQuestion}</span>
 				<input
 					type="text"
-					className="form-control rounded shadow-sm"
+					className={classInput}
+					value={value}
+					aria-label="Field for the question"
 					onChange={handleInputChange}
+					autoFocus
 				/>
+				{errors?.question && (
+					<div className="invalid-feedback">{errors.question}</div>
+				)}
 			</div>
 			<h5>Answers:</h5>
-			<ol className="pl-3">
-				{answers.map((it) => (
-					<li className="p-1" key={it.id}>
-						<FormAnswer answer={it} questionType={questionType} />
-					</li>
-				))}
-			</ol>
+			<DragDropContext onDragEnd={handleDragEnd}>
+				<Droppable droppableId="droppable">
+					{(provided) => (
+						<ul
+							className={answerList}
+							{...provided.droppableProps}
+							ref={provided.innerRef}
+						>
+							{newAnswers.map((it, idx) => (
+								<Draggable key={it.id} draggableId={String(it.id)} index={idx}>
+									{(provided, snapshot) => (
+										<li
+											className={`p-1 ${snapshot.isDragging && selected}`}
+											ref={provided.innerRef}
+											{...provided.draggableProps}
+											{...provided.dragHandleProps}
+										>
+											<FormAnswer
+												answer={it}
+												typeQuestion={typeQuestion}
+												error={errors?.answersInputs}
+												onModalShow={onModalShow}
+												onAnswerDelete={handleAnswerDelete}
+											/>
+										</li>
+									)}
+								</Draggable>
+							))}
+							{provided.placeholder}
+						</ul>
+					)}
+				</Droppable>
+			</DragDropContext>
+			{!(typeQuestion === 'number' && newAnswers.length >= 1) && (
+				<button
+					className="btn btn-primary float-right"
+					type="button"
+					title="Add answer"
+					onClick={handleAnswerAdd}
+				>
+					<i className="bi bi-plus-circle" />
+				</button>
+			)}
 			<div className="btn-group">
-				<button className="btn btn-secondary">Cansel</button>
-				<button className="btn btn-primary">Save</button>
+				<button
+					className="btn btn-secondary"
+					type="button"
+					onClick={handleCanselClick}
+				>
+					Cansel
+				</button>
+				<button
+					className="btn btn-primary"
+					type="button"
+					onClick={handleSaveClick}
+				>
+					Save
+				</button>
 			</div>
+			{errors?.answersGeneral && (
+				<div className="invalid-feedback d-block">{errors.answersGeneral}</div>
+			)}
 		</form>
 	);
+};
+
+FormQuestion.propTypes = {
+	question: PropTypes.object || null,
+	typeQuestion: PropTypes.string,
+	onSetTypeQuestion: PropTypes.func,
+	onRequestCreateQuestion: PropTypes.func,
+	onRequestUpdateQuestion: PropTypes.func,
+	onRequestMoveAnswer: PropTypes.func,
+	onModalShow: PropTypes.func,
 };
 
 export default FormQuestion;

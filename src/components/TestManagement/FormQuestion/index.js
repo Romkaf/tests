@@ -1,1 +1,1 @@
-export { default } from './FormQuestion';
+export { default } from './FormQuestionContainer';

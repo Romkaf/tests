@@ -1,26 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TestManagement from './TestManagement';
-import { requestAddTest } from '@models/actions';
+import { requestDeleteTest, showModal, requestEditTest } from '@models/actions';
 import PropTypes from 'prop-types';
 
-const TestManagementContainer = ({ requestAddTest, tests, id }) => {
+const TestManagementContainer = ({
+	tests,
+	id,
+	showModal,
+	requestDeleteTest,
+	requestEditTest,
+}) => {
 	const test = tests.find((it) => it.id === +id) || null;
 
 	return (
 		<div className="pt-4 pb-4">
-			<TestManagement test={test} onRequestAddTest={requestAddTest} />
+			<TestManagement
+				test={test}
+				onModalShow={showModal}
+				onRequestDeleteTest={requestDeleteTest}
+				onRequestEditTest={requestEditTest}
+			/>
 		</div>
 	);
 };
 
 TestManagementContainer.propTypes = {
-	requestAddTest: PropTypes.func,
 	tests: PropTypes.array,
 	id: PropTypes.string,
+	showModal: PropTypes.func,
+	requestDeleteTest: PropTypes.func,
+	requestEditTest: PropTypes.func,
 };
 
-const actions = { requestAddTest };
+const actions = { showModal, requestDeleteTest, requestEditTest };
 
 const mapStateToProps = ({ tests }) => ({ tests });
 

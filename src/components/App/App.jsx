@@ -43,10 +43,9 @@ const App = ({ user, error }) => {
 						}
 					/>
 					<Route
-						path={['/management/:id', '/management']}
+						path="/management/:id"
 						render={({ match }) => <ManagementPage id={match?.params.id} />}
 					/>
-
 					<Route component={NotFoundPage} />
 				</Switch>
 			</div>

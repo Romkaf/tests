@@ -1,0 +1,10 @@
+@import '@styles/variables/mixins.scss';
+
+.answerList {
+	padding-left: 0;
+	list-style: none;
+}
+
+.selected {
+	opacity: 0.6;
+}

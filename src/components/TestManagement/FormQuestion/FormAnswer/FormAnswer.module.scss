@@ -1,0 +1,11 @@
+@import '@styles/variables/mixins.scss';
+
+.btn {
+	border: 1px solid lightgray;
+	padding: 0 0.7rem 0 0.7rem;
+	border-radius: 0.2rem;
+
+	@include hoverSupport {
+		color: red;
+	}
+}
