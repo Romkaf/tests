@@ -1,12 +1,6 @@
 import { ERROR_TEXTS } from '@constants';
 
-const {
-	REQUIRED,
-	INDICATE_ANSWER,
-	ONE_ANSWER,
-	TWO_ANSWER,
-	ONE_RIGHT_ANSWER,
-} = ERROR_TEXTS;
+const { REQUIRED, INDICATE_ANSWER, TWO_ANSWER, ONE_RIGHT_ANSWER } = ERROR_TEXTS;
 
 export const validate = (fields) => {
 	const errors = {};

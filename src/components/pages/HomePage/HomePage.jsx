@@ -55,6 +55,7 @@ const HomePage = ({ onSignOut, onRequestAddTest, isAdmin, onTestsSort }) => {
 				btnTitle2="New Test"
 				funcBtn1={handleTestsSort}
 				funcBtn2={handleNewTestShow}
+				isAdmin={isAdmin}
 			/>
 			{isNewTest && (
 				<InputGroup

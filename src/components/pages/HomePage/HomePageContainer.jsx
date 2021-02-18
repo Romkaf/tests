@@ -21,7 +21,7 @@ HomePageContainer.propTypes = {
 };
 
 const mapStateToProps = ({ user }) => ({
-	isAdmin: user.is_admin,
+	isAdmin: user?.is_admin,
 });
 
 const actions = { signOut, requestAddTest, sortTests };

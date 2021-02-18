@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import FormAnswer from './FormAnswer/FormAnswer';
 import classnames from 'classnames';
 import { validate } from './validate';
