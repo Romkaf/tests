@@ -44,6 +44,7 @@ QuestionItem.propTypes = {
 	typeQuestion: PropTypes.string,
 	onSetTypeQuestion: PropTypes.func,
 	onSetQuestion: PropTypes.func,
+	onRequestDeleteQuestion: PropTypes.func,
 	onModalShow: PropTypes.func,
 };
 

@@ -3,11 +3,6 @@ import Row from './Row';
 import PropTypes from 'prop-types';
 
 const TestTable = ({ onModalShow, tests, isAdmin }) => {
-	const items = [
-		{ title: 'Химия', date: '17-10-2009', id: 1 },
-		{ title: 'Физика', date: '17-10-2009', id: 2 },
-	];
-
 	return (
 		<div>
 			<table className="table">

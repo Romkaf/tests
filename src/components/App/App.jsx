@@ -32,15 +32,12 @@ const App = ({ user, error }) => {
 						path="/login"
 						render={() => (user ? <Redirect to="/tests" /> : <LoginPage />)}
 					/>
+					<Route path="/tests" exact component={HomePage} />
 					<Route
-						path={['/tests/:id', '/tests']}
-						children={({ match }) =>
-							match?.params.id ? (
-								<div>{`Test execution screen`}</div>
-							) : (
-								<HomePage />
-							)
-						}
+						path="/tests/:id"
+						render={({ match }) => (
+							<div>{`Test ${match?.params.id} execution screen`}</div>
+						)}
 					/>
 					<Route
 						path="/management/:id"

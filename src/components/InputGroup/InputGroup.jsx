@@ -1,4 +1,4 @@
-import React, { useState, useSelector } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './InputGroup.module.scss';
 import classnames from 'classnames';
@@ -10,7 +10,7 @@ const InputGroup = ({
 	btnTitle2,
 	funcBtn1,
 	funcBtn2,
-	isAdmin = true,
+	isAdmin,
 	onChangeFilter,
 }) => {
 	const [value, setValue] = useState('');
@@ -85,6 +85,7 @@ InputGroup.propTypes = {
 	funcBtn1: PropTypes.func,
 	funcBtn2: PropTypes.func,
 	isAdmin: PropTypes.bool,
+	onChangeFilter: PropTypes.func,
 };
 
 export default InputGroup;

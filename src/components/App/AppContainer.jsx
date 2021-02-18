@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import App from './App';
+import PropTypes from 'prop-types';
 
 class AppContainer extends PureComponent {
 	render() {
@@ -8,6 +9,11 @@ class AppContainer extends PureComponent {
 		return <App user={user} error={error} />;
 	}
 }
+
+AppContainer.propTypes = {
+	user: PropTypes.object,
+	error: PropTypes.string,
+};
 
 const mapStateToProps = ({ user, error }) => ({
 	user,
