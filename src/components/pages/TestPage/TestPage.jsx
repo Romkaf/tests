@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import TestDoing from '@components/TestDoing';
 
 const TestPage = ({ id }) => {
-	return <div>This is Test Page {id}!</div>;
+	return <TestDoing id={id} />;
 };
 
 TestPage.propTypes = {

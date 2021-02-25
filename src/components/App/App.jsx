@@ -12,6 +12,7 @@ import HomePage from '@components/pages/HomePage';
 import ModalContainer from '@components/Modal';
 import ManagementPage from '@components/pages/ManagementPage';
 import ErrorIndicator from '@components/ErrorIndicator';
+import TestPage from '@components/pages/TestPage';
 
 const App = ({ user, error }) => {
 	return (
@@ -35,9 +36,7 @@ const App = ({ user, error }) => {
 					<Route path="/tests" exact component={HomePage} />
 					<Route
 						path="/tests/:id"
-						render={({ match }) => (
-							<div>{`Test ${match?.params.id} execution screen`}</div>
-						)}
+						render={({ match }) => <TestPage id={match?.params.id} />}
 					/>
 					<Route
 						path="/management/:id"
