@@ -35,6 +35,6 @@ TestManagementContainer.propTypes = {
 
 const actions = { showModal, requestDeleteTest, requestEditTest };
 
-const mapStateToProps = ({ tests }) => ({ tests });
+const mapStateToProps = ({ tests }) => ({ tests: tests.tests });
 
 export default connect(mapStateToProps, actions)(TestManagementContainer);

@@ -23,10 +23,8 @@ import { showAndHideError } from './error';
 
 function* workerFetchGetTests() {
 	try {
-		const {
-			data: { tests },
-		} = yield fetchGetTests();
-		yield put(fetchTestsSuccess(tests));
+		const { data } = yield fetchGetTests(`?per=8`);
+		yield put(fetchTestsSuccess(data));
 	} catch (error) {
 		yield showAndHideError(
 			'Не удалось выполнить загрузку данных с сервера',
@@ -48,7 +46,7 @@ function* workerFetchGetSortTest({ payload }) {
 	try {
 		const {
 			data: { tests },
-		} = yield fetchGetTests(`?sort=${payload}`);
+		} = yield fetchGetTests(`?sort=${payload}&per=8`);
 		yield put(addSortTests(tests));
 	} catch (error) {
 		yield showAndHideError(

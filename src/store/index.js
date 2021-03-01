@@ -6,7 +6,7 @@ import { locStorKey } from '@constants';
 
 const initialState = JSON.parse(localStorage.getItem(locStorKey)) || {
 	user: null,
-	tests: [],
+	tests: { tests: [] },
 	error: '',
 	modal: false,
 	registration: true,

@@ -37,7 +37,7 @@ const actions = {
 };
 
 const mapStateToProps = ({ tests, user, filter }) => ({
-	tests,
+	tests: tests.tests,
 	isAdmin: user?.is_admin,
 	filter,
 });

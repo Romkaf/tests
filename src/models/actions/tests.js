@@ -13,9 +13,9 @@ import {
 
 export const fetchTests = () => ({ type: FETCH_TESTS });
 
-export const fetchTestsSuccess = (tests) => ({
+export const fetchTestsSuccess = (data) => ({
 	type: FETCH_TESTS_SUCCESS,
-	payload: tests,
+	payload: data,
 });
 
 export const requestAddTest = (data) => ({
@@ -27,9 +27,9 @@ export const addTest = (data) => ({ type: ADD_TEST, payload: data });
 
 export const sortTests = (str) => ({ type: SORT_TESTS, payload: str });
 
-export const addSortTests = (tests) => ({
+export const addSortTests = (data) => ({
 	type: ADD_SORT_TESTS,
-	payload: tests,
+	payload: data,
 });
 
 export const requestDeleteTest = (id, history) => ({

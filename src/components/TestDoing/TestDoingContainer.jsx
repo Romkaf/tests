@@ -18,9 +18,9 @@ const TestDoingContainer = ({ tests, id, showModal }) => {
 
 TestDoingContainer.propTypes = {
 	tests: PropTypes.array,
-	showModal: PropTypes.func,
+	showModal: PropTypes.array,
 };
 
-const mapStateToProps = ({ tests }) => ({ tests });
+const mapStateToProps = ({ tests }) => ({ tests: tests.tests });
 
 export default connect(mapStateToProps, { showModal })(TestDoingContainer);
