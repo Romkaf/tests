@@ -21,9 +21,9 @@ import {
 } from '@models/actions/actionTypes';
 import { showAndHideError } from './error';
 
-function* workerFetchGetTests() {
+function* workerFetchGetTests({ payload }) {
 	try {
-		const { data } = yield fetchGetTests(`?per=8`);
+		const { data } = yield fetchGetTests(`?page=${payload}&per=8`);
 		yield put(fetchTestsSuccess(data));
 	} catch (error) {
 		yield showAndHideError(

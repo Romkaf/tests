@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import TestTableContainer from '@components/TestTable';
 import InputGroup from '@components/InputGroup';
 import PropTypes from 'prop-types';
+import Pagination from '../../Pagination';
 
 const HomePage = ({ onSignOut, onRequestAddTest, isAdmin, onTestsSort }) => {
 	const [isNewTest, setIsNewTest] = useState(false);
@@ -67,6 +68,7 @@ const HomePage = ({ onSignOut, onRequestAddTest, isAdmin, onTestsSort }) => {
 					isAdmin={isAdmin}
 				/>
 			)}
+			<Pagination />
 			<TestTableContainer />
 		</div>
 	);

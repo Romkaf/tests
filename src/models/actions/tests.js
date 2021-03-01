@@ -9,9 +9,13 @@ import {
 	ADD_SORT_TESTS,
 	REQUEST_EDIT_TEST,
 	EDIT_TEST,
+	SET_CURRENT_PAGE,
 } from './actionTypes';
 
-export const fetchTests = () => ({ type: FETCH_TESTS });
+export const fetchTests = (currentPage) => ({
+	type: FETCH_TESTS,
+	payload: currentPage,
+});
 
 export const fetchTestsSuccess = (data) => ({
 	type: FETCH_TESTS_SUCCESS,
@@ -44,3 +48,4 @@ export const requestEditTest = (id, value, history) => ({
 
 export const deleteTest = (id) => ({ type: DELETE_TEST, payload: id });
 export const editTest = (id) => ({ type: EDIT_TEST, payload: id });
+export const setCurrentPage = (id) => ({ type: SET_CURRENT_PAGE, payload: id });
