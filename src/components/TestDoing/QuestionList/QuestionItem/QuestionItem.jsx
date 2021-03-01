@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classnames from 'classnames';
 import PropsTypes from 'prop-types';
 
@@ -37,25 +37,27 @@ const QuestionItem = ({ question, count, idx }) => {
 	return (
 		<li className={classItem}>
 			<h5>{title}</h5>
-			<ul className="list-group">
-				{answers.map((it) => (
-					<li className="list-group-item" key={it.id}>
-						<div className={classContainer}>
-							<input
-								id={it.id}
-								className={classInput}
-								type={choiceType(type)}
-								name={String(id)}
-							/>
-							{type !== 'number' && (
-								<label className="custom-control-label" htmlFor={it.id}>
-									{it.text}
-								</label>
-							)}
-						</div>
-					</li>
-				))}
-			</ul>
+			<form>
+				<ul className="list-group">
+					{answers.map((it) => (
+						<li className="list-group-item" key={it.id}>
+							<div className={classContainer}>
+								<input
+									id={it.id}
+									className={classInput}
+									type={choiceType(type)}
+									name={String(id)}
+								/>
+								{type !== 'number' && (
+									<label className="custom-control-label" htmlFor={it.id}>
+										{it.text}
+									</label>
+								)}
+							</div>
+						</li>
+					))}
+				</ul>
+			</form>
 		</li>
 	);
 };
