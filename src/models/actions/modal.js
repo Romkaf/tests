@@ -1,9 +1,9 @@
 import { SHOW_MODAL, HIDE_MODAL } from './actionTypes';
 
-export const showModal = (text, func) => {
+export const showModal = (text, func, singleBtnText) => {
 	return {
 		type: SHOW_MODAL,
-		payload: { text, func },
+		payload: { text, func, singleBtnText },
 	};
 };
 

@@ -3,7 +3,7 @@ import QuestionList from './QuestionList/QuestionList';
 import PropsTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
-const TestDoing = ({ questions, title }) => {
+const TestDoing = ({ questions, title, onModalShow }) => {
 	const [count, setCount] = useState(questions.length ? 1 : 0);
 	const history = useHistory();
 
@@ -15,12 +15,15 @@ const TestDoing = ({ questions, title }) => {
 		setCount(count - 1);
 	};
 
+	const handleRouteChange = () => history.push('/tests');
+
 	const handleFinishBtnClick = () => {
-		// history.push('/tests');
 		const answers = getAnswers();
 		const rightAnswers = checkAnswers(answers);
-		console.log(
+		onModalShow(
 			`${rightAnswers.length} right answer(s) from ${questions.length} questions`,
+			handleRouteChange,
+			'To home',
 		);
 	};
 
@@ -104,6 +107,7 @@ const TestDoing = ({ questions, title }) => {
 TestDoing.propTypes = {
 	questions: PropsTypes.array,
 	title: PropsTypes.string,
+	onModalShow: PropsTypes.func,
 };
 
 export default TestDoing;

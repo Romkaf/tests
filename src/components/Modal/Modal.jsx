@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { keyCodeEsc } from '@constants';
+import PropTypes from 'prop-types';
 import styles from './Modal.module.scss';
 
-const Modale = ({ text, onModalConfirm, onModalHide }) => {
+const Modal = ({ text, onModalConfirm, onModalHide, singleBtnText }) => {
 	useEffect(() => {
 		modal.current.focus();
 		document.body.classList.add(styles.lock);
@@ -52,19 +53,21 @@ const Modale = ({ text, onModalConfirm, onModalHide }) => {
 						<p>{text}</p>
 					</div>
 					<div className="modal-footer">
-						<button
-							type="button"
-							className="btn btn-secondary"
-							onClick={handleModalCansel}
-						>
-							Cansel
-						</button>
+						{!singleBtnText && (
+							<button
+								type="button"
+								className="btn btn-secondary"
+								onClick={handleModalCansel}
+							>
+								Cansel
+							</button>
+						)}
 						<button
 							type="button"
 							className="btn btn-primary"
 							onClick={handleModalConfirm}
 						>
-							Confirm
+							{singleBtnText ? `${singleBtnText}` : 'Confirm'}
 						</button>
 					</div>
 				</div>
@@ -73,4 +76,11 @@ const Modale = ({ text, onModalConfirm, onModalHide }) => {
 	);
 };
 
-export default Modale;
+Modal.propTypes = {
+	text: PropTypes.string,
+	onModalConfirm: PropTypes.func,
+	onModalHide: PropTypes.func,
+	singleBtnText: PropTypes.string,
+};
+
+export default Modal;
