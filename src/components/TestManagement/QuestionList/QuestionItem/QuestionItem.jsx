@@ -1,4 +1,5 @@
 import React from 'react';
+import { MODAL_MESSAGES } from '@constants';
 import PropTypes from 'prop-types';
 
 const QuestionItem = ({
@@ -15,10 +16,7 @@ const QuestionItem = ({
 	};
 
 	const handleBtnDeleteClick = () =>
-		onModalShow(
-			'Вы действительно хотите удалить вопрос?',
-			onRequestDeleteQuestion,
-		);
+		onModalShow(MODAL_MESSAGES.DELETE_QUESTION, onRequestDeleteQuestion);
 
 	return (
 		<div className="d-flex align-items-center">

@@ -116,10 +116,7 @@ function* workerFetchMoveAnswer({ payload }) {
 		const { id, position } = payload;
 		yield fetchMoveAnswer(id, position);
 	} catch (error) {
-		yield showAndHideError(
-			'Не удалось изменить позицию ответа на сервере',
-			error,
-		);
+		yield console.warn('Не удалось изменить позицию ответа на сервере', error);
 	}
 }
 

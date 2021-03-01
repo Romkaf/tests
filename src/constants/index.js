@@ -1,4 +1,3 @@
-export const MODAL_QUEST_RUN_TEST = 'Do you want to start the test?';
 export const keyCodeEsc = 27;
 export const baseURL = 'https://snp-tests.herokuapp.com/api/v1/';
 export const mockURL = 'http://localhost:3200/users';
@@ -22,4 +21,12 @@ export const ERROR_TEXTS = {
 	ONE_RIGHT_ANSWER: 'Requires only one right answer',
 	ONE_ANSWER: 'Requires at least one answer',
 	TWO_ANSWER: 'Requires at least two answers',
+};
+
+export const MODAL_MESSAGES = {
+	DELETE_TEST: 'Do you really want to remove this test?',
+	SAVE_TEST: 'Do you want to save changes?',
+	DELETE_QUESTION: 'Do you really want to remove this question?',
+	DELETE_ANSWER: 'Do you really want to remove this answer?',
+	START_TEST: 'Do you want to start the test?',
 };

@@ -3,6 +3,7 @@ import QuestionList from './QuestionList';
 import Dropdown from './Dropdown';
 import FormQuestion from './FormQuestion';
 import { Link, useHistory } from 'react-router-dom';
+import { MODAL_MESSAGES } from '@constants';
 import PropTypes from 'prop-types';
 
 const TestManagement = ({
@@ -15,6 +16,8 @@ const TestManagement = ({
 	const [question, setQuestion] = useState(null);
 	const [typeQuestion, setTypeQuestion] = useState('');
 	const history = useHistory();
+
+	const { DELETE_TEST, SAVE_TEST } = MODAL_MESSAGES;
 
 	useEffect(() => question && !typeQuestion && setQuestion(null), [
 		typeQuestion,
@@ -32,11 +35,9 @@ const TestManagement = ({
 		onRequestEditTest(test.id, value, history);
 	};
 
-	const handleBtnSaveClick = () =>
-		onModalShow('Сохранить изменения?', handleTestSave);
+	const handleBtnSaveClick = () => onModalShow(SAVE_TEST, handleTestSave);
 
-	const handleBtnDeleteClick = () =>
-		onModalShow('Вы действительно хотите удалить тест?', handleTestDelete);
+	const handleBtnDeleteClick = () => onModalShow(DELETE_TEST, handleTestDelete);
 
 	return (
 		<div>

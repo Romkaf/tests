@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './FormAnswer.module.scss';
 import classnames from 'classnames';
+import { MODAL_MESSAGES } from '@constants';
 import PropTypes from 'prop-types';
 
 const FormAnswer = ({
@@ -24,7 +25,7 @@ const FormAnswer = ({
 	const handleInputChange = (evt) => setValue(evt.target.value);
 	const handleCheckboxChange = () => setIsRight((state) => !state);
 	const handleDeleteClick = () =>
-		onModalShow('Вы действительно хотите удалить ответ?', wrapperAnswerDelete);
+		onModalShow(MODAL_MESSAGES.DELETE_ANSWER, wrapperAnswerDelete);
 
 	return (
 		<>

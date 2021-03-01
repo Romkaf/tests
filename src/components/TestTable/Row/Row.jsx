@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { MODAL_QUEST_RUN_TEST } from '@constants';
+import { MODAL_MESSAGES } from '@constants';
 
 const Row = ({ item, onModalShow, isAdmin }) => {
 	const { title, created_at, id } = item;
@@ -11,7 +11,7 @@ const Row = ({ item, onModalShow, isAdmin }) => {
 	const handleRowClick = (evt) => {
 		evt.target.tagName !== 'BUTTON' &&
 			evt.target.tagName !== 'I' &&
-			onModalShow(MODAL_QUEST_RUN_TEST, handleTestStart);
+			onModalShow(MODAL_MESSAGES.START_TEST, handleTestStart);
 	};
 
 	const handleBtnEditClick = () => history.push(`/management/${id}`);
