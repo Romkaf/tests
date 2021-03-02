@@ -21,9 +21,9 @@ import { showAndHideError } from './error';
 
 function* workerFetchGetTests({ payload }) {
 	try {
-		const { currentPage, sortType } = payload;
+		const { currentPage, sortType, filter } = payload;
 		const { data } = yield fetchGetTests(
-			`?page=${currentPage}&per=8&sort=${sortType}`,
+			`?page=${currentPage}&per=8&sort=${sortType}&search=${filter}`,
 		);
 		yield put(fetchTestsSuccess(data));
 	} catch (error) {
@@ -36,8 +36,10 @@ function* workerFetchGetTests({ payload }) {
 
 function* workerFetchPostTest({ payload }) {
 	try {
-		const { data } = yield fetchCreateTest(payload);
+		const { title, history } = payload;
+		const { data } = yield fetchCreateTest({ title });
 		yield put(addTest(data));
+		yield history.push(`/management/${data.id}`);
 	} catch (error) {
 		yield showAndHideError('Не удалось загрузить данные на сервер', error);
 	}

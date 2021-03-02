@@ -22,10 +22,6 @@ const HomePage = ({
 		setIsNewTest(false);
 	};
 
-	const handleNewTestCreate = (data) => {
-		onRequestAddTest(data);
-	};
-
 	const handleTestsSort = () => {
 		sortType === 'created_at_desc'
 			? onSortTypeSet('created_at_asc')
@@ -61,7 +57,7 @@ const HomePage = ({
 					btnTitle1="Cansel"
 					btnTitle2="Create"
 					funcBtn1={handleNewTestHide}
-					funcBtn2={handleNewTestCreate}
+					funcBtn2={onRequestAddTest}
 					isAdmin={isAdmin}
 				/>
 			)}

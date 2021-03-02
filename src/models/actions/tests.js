@@ -11,9 +11,9 @@ import {
 	SET_SORT_TYPE,
 } from './actionTypes';
 
-export const fetchTests = (currentPage, sortType) => ({
+export const fetchTests = (currentPage, sortType, filter) => ({
 	type: FETCH_TESTS,
-	payload: { currentPage, sortType },
+	payload: { currentPage, sortType, filter },
 });
 
 export const fetchTestsSuccess = (data) => ({
@@ -21,12 +21,12 @@ export const fetchTestsSuccess = (data) => ({
 	payload: data,
 });
 
-export const requestAddTest = (data) => ({
+export const requestAddTest = (title, history) => ({
 	type: REQUEST_ADD_TEST,
-	payload: data,
+	payload: { title, history },
 });
 
-export const addTest = (data) => ({ type: ADD_TEST, payload: data });
+export const addTest = (test) => ({ type: ADD_TEST, payload: test });
 
 export const requestDeleteTest = (id, history) => ({
 	type: REQUEST_DELETE_TEST,

@@ -44,7 +44,7 @@ export default (
 		case ADD_TEST:
 			return {
 				...state,
-				tests: [...state.tests, tests],
+				tests: [...state.tests, action.payload],
 			};
 
 		case DELETE_TEST:

@@ -12,7 +12,10 @@ const InputGroupContainer = (props) => (
 		funcBtn2={props.funcBtn2}
 		isAdmin={props.isAdmin}
 		onChangeFilter={props.changeFilter}
+		filter={props.filter}
 	/>
 );
 
-export default connect(null, { changeFilter })(InputGroupContainer);
+const mapStateToProps = ({ filter }) => ({ filter });
+
+export default connect(mapStateToProps, { changeFilter })(InputGroupContainer);

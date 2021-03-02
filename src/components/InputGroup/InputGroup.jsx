@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './InputGroup.module.scss';
 import classnames from 'classnames';
 import { useHistory } from 'react-router-dom';
+import { debounce } from '@utils/debounce';
 
 const InputGroup = ({
 	title,
@@ -12,6 +13,7 @@ const InputGroup = ({
 	funcBtn2,
 	isAdmin,
 	onChangeFilter,
+	filter,
 }) => {
 	const [value, setValue] = useState('');
 	const [error, setError] = useState(false);
@@ -20,14 +22,15 @@ const InputGroup = ({
 		'is-invalid': error,
 	});
 
-	const handleFilterChange = (value) => {
+	const handleFilterChange = debounce(function (value) {
 		onChangeFilter(value);
 		history.push(`/tests?search=${value}`);
-	};
+	}, 250);
 
 	const handleInputChange = (evt) => {
-		setValue(evt.target.value);
-		title === 'Filter' && handleFilterChange(evt.target.value);
+		title === 'Filter'
+			? handleFilterChange(evt.target.value)
+			: setValue(evt.target.value);
 	};
 
 	const handleBtnCreateClick = () => {
@@ -35,7 +38,7 @@ const InputGroup = ({
 			setError(true);
 		} else {
 			setError(false);
-			funcBtn2({ title: value });
+			funcBtn2(value, history);
 		}
 	};
 
@@ -59,7 +62,8 @@ const InputGroup = ({
 					id={title}
 					type="text"
 					className={classInput}
-					value={value}
+					defaultValue={title === 'Filter' ? filter : undefined}
+					value={title === 'Filter' ? undefined : value}
 					onChange={handleInputChange}
 				/>
 				{error && <div className={styles.error}>Required to fill</div>}

@@ -13,16 +13,13 @@ const TestTableContainer = ({
 	currentPage,
 	sortType,
 }) => {
-	useEffect(() => fetchTests(currentPage, sortType), [currentPage, sortType]);
+	useEffect(() => fetchTests(currentPage, sortType, filter), [
+		currentPage,
+		sortType,
+		filter,
+	]);
 
-	const isInclude = (str) => str.toUpperCase().includes(filter.toUpperCase());
-	const visibleTests = filter
-		? tests.filter((it) => isInclude(it.title))
-		: tests;
-
-	return (
-		<TestTable onModalShow={showModal} tests={visibleTests} isAdmin={isAdmin} />
-	);
+	return <TestTable onModalShow={showModal} tests={tests} isAdmin={isAdmin} />;
 };
 
 TestTableContainer.propTypes = {
