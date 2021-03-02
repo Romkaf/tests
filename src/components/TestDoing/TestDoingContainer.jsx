@@ -18,7 +18,7 @@ const TestDoingContainer = ({ tests, id, showModal }) => {
 
 TestDoingContainer.propTypes = {
 	tests: PropTypes.array,
-	showModal: PropTypes.array,
+	showModal: PropTypes.func,
 };
 
 const mapStateToProps = ({ tests }) => ({ tests: tests.tests });

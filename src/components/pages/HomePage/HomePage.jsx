@@ -5,7 +5,13 @@ import InputGroup from '@components/InputGroup';
 import PropTypes from 'prop-types';
 import Pagination from '../../Pagination';
 
-const HomePage = ({ onSignOut, onRequestAddTest, isAdmin, onTestsSort }) => {
+const HomePage = ({
+	onSignOut,
+	onRequestAddTest,
+	isAdmin,
+	onSortTypeSet,
+	sortType,
+}) => {
 	const [isNewTest, setIsNewTest] = useState(false);
 
 	const handleNewTestShow = () => {
@@ -20,20 +26,11 @@ const HomePage = ({ onSignOut, onRequestAddTest, isAdmin, onTestsSort }) => {
 		onRequestAddTest(data);
 	};
 
-	const wrapperTestsSort = () => {
-		let isSort;
-		return function () {
-			if (isSort) {
-				onTestsSort('created_at_desc');
-				isSort = false;
-			} else {
-				onTestsSort('created_at_asc');
-				isSort = true;
-			}
-		};
+	const handleTestsSort = () => {
+		sortType === 'created_at_desc'
+			? onSortTypeSet('created_at_asc')
+			: onSortTypeSet('created_at_desc');
 	};
-
-	const handleTestsSort = wrapperTestsSort();
 
 	return (
 		<div>
@@ -78,7 +75,8 @@ HomePage.propTypes = {
 	onSignOut: PropTypes.func,
 	onRequestAddTest: PropTypes.func,
 	isAdmin: PropTypes.bool,
-	onTestsSort: PropTypes.func,
+	onSortTypeSet: PropTypes.func,
+	sortType: PropTypes.string,
 };
 
 export default HomePage;

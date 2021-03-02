@@ -8,14 +8,12 @@ import {
 import {
 	fetchTestsSuccess,
 	addTest,
-	addSortTests,
 	deleteTest,
 	editTest,
 } from '@models/actions';
 import {
 	FETCH_TESTS,
 	REQUEST_ADD_TEST,
-	SORT_TESTS,
 	REQUEST_DELETE_TEST,
 	REQUEST_EDIT_TEST,
 } from '@models/actions/actionTypes';
@@ -23,7 +21,10 @@ import { showAndHideError } from './error';
 
 function* workerFetchGetTests({ payload }) {
 	try {
-		const { data } = yield fetchGetTests(`?page=${payload}&per=8`);
+		const { currentPage, sortType } = payload;
+		const { data } = yield fetchGetTests(
+			`?page=${currentPage}&per=8&sort=${sortType}`,
+		);
 		yield put(fetchTestsSuccess(data));
 	} catch (error) {
 		yield showAndHideError(
@@ -39,20 +40,6 @@ function* workerFetchPostTest({ payload }) {
 		yield put(addTest(data));
 	} catch (error) {
 		yield showAndHideError('Не удалось загрузить данные на сервер', error);
-	}
-}
-
-function* workerFetchGetSortTest({ payload }) {
-	try {
-		const {
-			data: { tests },
-		} = yield fetchGetTests(`?sort=${payload}&per=8`);
-		yield put(addSortTests(tests));
-	} catch (error) {
-		yield showAndHideError(
-			'Не удалось выполнить загрузку данных с сервера',
-			error,
-		);
 	}
 }
 
@@ -82,7 +69,6 @@ export default function* () {
 	yield all([
 		takeEvery(FETCH_TESTS, workerFetchGetTests),
 		takeEvery(REQUEST_ADD_TEST, workerFetchPostTest),
-		takeEvery(SORT_TESTS, workerFetchGetSortTest),
 		takeEvery(REQUEST_DELETE_TEST, workerFetchDeleteTest),
 		takeEvery(REQUEST_EDIT_TEST, workerFetchEditTest),
 	]);

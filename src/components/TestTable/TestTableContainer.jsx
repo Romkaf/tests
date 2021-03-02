@@ -11,8 +11,9 @@ const TestTableContainer = ({
 	filter,
 	fetchTests,
 	currentPage,
+	sortType,
 }) => {
-	useEffect(() => fetchTests(currentPage), [currentPage]);
+	useEffect(() => fetchTests(currentPage, sortType), [currentPage, sortType]);
 
 	const isInclude = (str) => str.toUpperCase().includes(filter.toUpperCase());
 	const visibleTests = filter
@@ -31,6 +32,7 @@ TestTableContainer.propTypes = {
 	isAdmin: PropTypes.bool,
 	filter: PropTypes.string,
 	currentPage: PropTypes.number,
+	sortType: PropTypes.string,
 };
 
 const actions = {
@@ -41,6 +43,7 @@ const actions = {
 const mapStateToProps = ({ tests, user, filter }) => ({
 	tests: tests.tests,
 	currentPage: tests.currentPage,
+	sortType: tests.sortType,
 	isAdmin: user?.is_admin,
 	filter,
 });

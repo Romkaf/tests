@@ -1,16 +1,22 @@
 import {
 	FETCH_TESTS_SUCCESS,
 	ADD_TEST,
-	ADD_SORT_TESTS,
 	DELETE_TEST,
 	ADD_QUESTION,
 	UPDATE_QUESTION,
 	DELETE_QUESTION,
 	SET_CURRENT_PAGE,
+	SET_SORT_TYPE,
 } from '@models/actions/actionTypes';
 
 export default (
-	state = { tests: [], totalPages: 1, totalCount: 0, currentPage: 1 },
+	state = {
+		tests: [],
+		totalPages: 1,
+		totalCount: 0,
+		currentPage: 1,
+		sortType: 'created_at_desc',
+	},
 	action,
 ) => {
 	switch (action.type) {
@@ -29,10 +35,10 @@ export default (
 				currentPage: action.payload,
 			};
 
-		case ADD_SORT_TESTS:
+		case SET_SORT_TYPE:
 			return {
 				...state,
-				tests: [...action.payload],
+				sortType: action.payload,
 			};
 
 		case ADD_TEST:

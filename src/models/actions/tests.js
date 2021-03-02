@@ -5,16 +5,15 @@ import {
 	ADD_TEST,
 	REQUEST_DELETE_TEST,
 	DELETE_TEST,
-	SORT_TESTS,
-	ADD_SORT_TESTS,
 	REQUEST_EDIT_TEST,
 	EDIT_TEST,
 	SET_CURRENT_PAGE,
+	SET_SORT_TYPE,
 } from './actionTypes';
 
-export const fetchTests = (currentPage) => ({
+export const fetchTests = (currentPage, sortType) => ({
 	type: FETCH_TESTS,
-	payload: currentPage,
+	payload: { currentPage, sortType },
 });
 
 export const fetchTestsSuccess = (data) => ({
@@ -29,13 +28,6 @@ export const requestAddTest = (data) => ({
 
 export const addTest = (data) => ({ type: ADD_TEST, payload: data });
 
-export const sortTests = (str) => ({ type: SORT_TESTS, payload: str });
-
-export const addSortTests = (data) => ({
-	type: ADD_SORT_TESTS,
-	payload: data,
-});
-
 export const requestDeleteTest = (id, history) => ({
 	type: REQUEST_DELETE_TEST,
 	payload: { id, history },
@@ -48,4 +40,8 @@ export const requestEditTest = (id, value, history) => ({
 
 export const deleteTest = (id) => ({ type: DELETE_TEST, payload: id });
 export const editTest = (id) => ({ type: EDIT_TEST, payload: id });
-export const setCurrentPage = (id) => ({ type: SET_CURRENT_PAGE, payload: id });
+export const setCurrentPage = (page) => ({
+	type: SET_CURRENT_PAGE,
+	payload: page,
+});
+export const setSortType = (type) => ({ type: SET_SORT_TYPE, payload: type });
