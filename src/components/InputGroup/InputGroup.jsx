@@ -65,6 +65,7 @@ const InputGroup = ({
 					defaultValue={title === 'Filter' ? filter : undefined}
 					value={title === 'Filter' ? undefined : value}
 					onChange={handleInputChange}
+					autoFocus={title === 'Test title' && true}
 				/>
 				{error && <div className={styles.error}>Required to fill</div>}
 			</div>

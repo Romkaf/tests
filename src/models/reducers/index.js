@@ -5,6 +5,7 @@ import registration from './registration';
 import error from './error';
 import tests from './tests';
 import filter from './filter';
+import spinner from './spinner';
 
 export default combineReducers({
 	modal,
@@ -13,4 +14,5 @@ export default combineReducers({
 	error,
 	tests,
 	filter,
+	spinner,
 });

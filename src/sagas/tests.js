@@ -10,6 +10,8 @@ import {
 	addTest,
 	deleteTest,
 	editTest,
+	showSpinner,
+	hideSpinner,
 } from '@models/actions';
 import {
 	FETCH_TESTS,
@@ -21,12 +23,15 @@ import { showAndHideError } from './error';
 
 function* workerFetchGetTests({ payload }) {
 	try {
+		yield put(showSpinner());
 		const { currentPage, sortType, filter } = payload;
 		const { data } = yield fetchGetTests(
 			`?page=${currentPage}&per=8&sort=${sortType}&search=${filter}`,
 		);
 		yield put(fetchTestsSuccess(data));
+		yield put(hideSpinner());
 	} catch (error) {
+		yield put(hideSpinner());
 		yield showAndHideError(
 			'Не удалось выполнить загрузку данных с сервера',
 			error,

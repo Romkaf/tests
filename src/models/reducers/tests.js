@@ -12,7 +12,7 @@ import {
 export default (
 	state = {
 		tests: [],
-		totalPages: 1,
+		totalPages: 0,
 		totalCount: 0,
 		currentPage: 1,
 		sortType: 'created_at_desc',
