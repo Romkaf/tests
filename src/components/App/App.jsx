@@ -29,11 +29,14 @@ const App = ({ user, error }) => {
 						}
 					/>
 					<Route
-						exact
 						path="/login"
 						render={() => (user ? <Redirect to="/tests" /> : <LoginPage />)}
 					/>
-					<Route path="/tests" exact component={HomePage} />
+					<Route
+						path="/tests"
+						exact
+						render={() => (user ? <HomePage /> : <Redirect to="/login" />)}
+					/>
 					<Route
 						path="/tests/:id"
 						render={({ match }) => <TestPage id={match?.params.id} />}

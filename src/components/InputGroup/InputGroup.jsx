@@ -23,8 +23,8 @@ const InputGroup = ({
 	});
 
 	const handleFilterChange = debounce(function (value) {
-		onChangeFilter(value);
-		history.push(`/tests?search=${value}`);
+		onChangeFilter(value.trim());
+		history.push(`/tests?search=${value.trim()}`);
 	}, 250);
 
 	const handleInputChange = (evt) => {
@@ -38,7 +38,7 @@ const InputGroup = ({
 			setError(true);
 		} else {
 			setError(false);
-			funcBtn2(value, history);
+			funcBtn2(value.trim(), history);
 		}
 	};
 
